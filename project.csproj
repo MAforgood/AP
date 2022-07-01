@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="567cae7c5e5431909718620b5a2a9aa3.jpg" />
+    <None Remove="585e4bf3cb11b227491c339a %281%29.png" />
+    <None Remove="basket-cart-icon-27.png" />
+    <None Remove="OOjs_UI_icon_userAvatar.svg.png" />
+    <None Remove="png-transparent-debit-card-credit-card-computer-icons-bank-atm-card-atm-miscellaneous-angle-text.png" />
+    <None Remove="png-transparent-shopping-cart-shopping-centre-icon-shopping-cart-text-retail-monochrome.png" />
+    <None Remove="row-various-colorful-books_23-2148207636.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="567cae7c5e5431909718620b5a2a9aa3.jpg" />
+    <Resource Include="585e4bf3cb11b227491c339a (1).png" />
+    <Resource Include="basket-cart-icon-27.png" />
+    <Resource Include="OOjs_UI_icon_userAvatar.svg.png" />
+    <Resource Include="png-transparent-debit-card-credit-card-computer-icons-bank-atm-card-atm-miscellaneous-angle-text.png" />
+    <Resource Include="png-transparent-shopping-cart-shopping-centre-icon-shopping-cart-text-retail-monochrome.png" />
+    <Resource Include="row-various-colorful-books_23-2148207636.webp" />
+  </ItemGroup>
+
+</Project>
