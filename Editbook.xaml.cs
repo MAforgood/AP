@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -20,10 +21,10 @@ namespace project
     /// </summary>
     public partial class Editbook : Window
     {
-        Books book;
+        
         public Editbook()
         {
-            
+            //this.book = book;
             InitializeComponent();
         }
 
@@ -31,7 +32,57 @@ namespace project
         {
             if (Regex.IsMatch(neweditname.Text, @"^[a-zA-Z]{3,32}$"))
             {
-                if (neweditname.Text == book.Name)
+                if (Regex.IsMatch(neweditauthor.Text, @"^[a-zA-Z]{3,32}$"))
+                {
+                    if (int.Parse(newedityear.Text) > 0 && int.Parse(newedityear.Text) < 2022)
+                    {
+                        if (int.Parse(neweditprice.Text) > 0 && int.Parse(neweditprice.Text) < 10000000)
+                        {
+                            if (neweditsummary.Text.Length > 0 && neweditsummary.Text.Length < 300)
+                            {
+                                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                                _connection.Open();
+                                string command2 = "Update Books SET Name='" + neweditname + "',Author='" + neweditauthor + "',Publishe Year='" + newedityear + "',Price='" + neweditprice + "',Summary='" + neweditsummary + "',  ";
+                                SqlCommand cmd2 = new SqlCommand(command2, _connection);
+                                try
+                                {
+                                    cmd2.ExecuteNonQuery();
+                                    MessageBox.Show("Edited Successfully");
+                                }
+                                catch (SqlException ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Wrong Format!", "Summary Format!");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong Format!", "Price Format!");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong Format!", "Publishe Year Format!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Wrong Format!", "Author Format!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Wrong Format!", "Name Format!");
+            }
+        }
+    }
+}
+            /*
+                                if (neweditname.Text == book.Name)
                 {
                     MessageBox.Show("It Is Reppetetive!", "Reppetetive Name!");
                 }
@@ -97,6 +148,5 @@ namespace project
             }
         }
 
-       
-    }
-}
+       */
+

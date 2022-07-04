@@ -16,6 +16,7 @@ using Microsoft.Win32;
 using System.Data.SqlClient;
 using System.Data;
 using System.Text.RegularExpressions;
+using Microsoft.Data.Sqlite;
 
 namespace project
 {
@@ -38,7 +39,7 @@ namespace project
 
             BinaryReader reader = new BinaryReader(Data);
 
-            string path = @"C:\new\file";
+            string path = @"C:";
 
             FileStream fstream = new FileStream(path, FileMode.CreateNew);
 
@@ -108,15 +109,25 @@ namespace project
 
         private void Editbut_Click(object sender, RoutedEventArgs e)
         {
-            if (Books.allbooksname.Contains(editnamebox.Text))
+            if (Regex.IsMatch(editnamebox.Text, @"^[a-zA-Z]{3,32}$"))
             {
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                _connection.Open();
+                string command = "select * from Users where Name ='" + editnamebox.Text.Trim() + "' ";
+                SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                SqlCommand cmd = new SqlCommand(command, _connection);
+                cmd.BeginExecuteNonQuery();
+                if (table.Rows.Count != 1)
+                {
+                    MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
+                }
+
                 Editbook edit = new Editbook();
                 edit.Show();
             }
-            else
-            {
-                MessageBox.Show("Not Existed!");
-            }
+            
         }
 
         private void Vippricebut_Click(object sender, RoutedEventArgs e)
@@ -126,7 +137,35 @@ namespace project
 
         private void Vipbookbut_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Mentioned Book Was Added To VIP Section!", "Done!");
+            if (Regex.IsMatch(vipbooksbox.Text, @"^[a-zA-Z]{3,32}$"))
+            {
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                _connection.Open();
+                string command = "select * from Books where Name ='" + vipbooksbox.Text.Trim() + "' ";
+                SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                SqlCommand cmd = new SqlCommand(command, _connection);
+                cmd.BeginExecuteNonQuery();
+                if (table.Rows.Count != 1)
+                {
+                    MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
+                }
+                //SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+               // _connection.Open();
+                string command2 = "Update Books SET Type='"+"VIP"+"'";
+                SqlCommand cmd2 = new SqlCommand(command2, _connection);
+                try
+                {
+                    cmd2.ExecuteNonQuery();
+                    MessageBox.Show("Mentioned Book Was Added To VIP Section!", "Done!");
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+               
+            }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -146,12 +185,56 @@ namespace project
 
         private void Statsbooknamebut_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Sold Numbers:  \nIncome: ", "Stats");
+            if (Regex.IsMatch(statsbooknamebox.Text, @"^[a-zA-Z]{3,32}$"))
+            {
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                _connection.Open();
+                string command = "select * from Books where Name ='" + statsbooknamebox.Text.Trim() + "' ";
+                SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                SqlCommand cmd = new SqlCommand(command, _connection);
+                cmd.BeginExecuteNonQuery();
+                if (table.Rows.Count != 1)
+                {
+                    MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
+                }
+
+
+                MessageBox.Show("Sold Numbers:  \nIncome: ", "Stats");
+            }
         }
 
         private void Statsbookratebut_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Average Rate: ", "Rating");
+            if (Regex.IsMatch(statsbookratebox.Text, @"^[a-zA-Z]{3,32}$"))
+            {
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                _connection.Open();
+                string command = "select * from Books where Name ='" + statsbookratebox.Text.Trim() + "' ";
+                SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                SqlCommand cmd = new SqlCommand(command, _connection);
+                cmd.BeginExecuteNonQuery();
+                if (table.Rows.Count != 1)
+                {
+                    MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
+                }
+                string command2 = "select AVG(Rate) From Books Where Name='" + statsbookratebox.Text.Trim() + "' ";
+                SqlCommand cmd2 = new SqlCommand(command2, _connection);
+                string hlp = cmd2.ToString();
+                try
+                {
+                    cmd2.ExecuteNonQuery();
+                    MessageBox.Show("Average Rate : "+hlp, "Done!");
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -185,6 +268,7 @@ namespace project
                             if (addbooksummarybox.Text.Length > 0 && addbooksummarybox.Text.Length < 300)
                             {
                                 Books book = new Books(addbooknamebox.Text, addbookauthorbox.Text, int.Parse(addbookyearbox.Text), int.Parse(addbookpricebox.Text), addbooksummarybox.Text);
+                               
                                 book.AddTotable();
                                 this.Close();
 
@@ -206,12 +290,24 @@ namespace project
             if (usersearchbox.Text == "") { MessageBox.Show("Cnat Be Empty"); }
             else
             {
-                string command = "select from Users where Name = '" + usersearchbox.Text + "' or Email = '" + usersearchbox.Text + "'";
                 SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
-                connection.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                DataTable data = new DataTable();
-                adapter.Fill(data);
+                try
+                {
+                    connection.Open();
+                    string command = "select from Users where Name = '" + usersearchbox.Text + "' or Email = '" + usersearchbox.Text + "',Type='" + "Normal" + "'";
+                    SqlCommand cmd = new SqlCommand(command, connection);
+                    cmd.ExecuteNonQuery();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable data = new DataTable("Users");
+                    adapter.Fill(data);
+                    userlistdatagrid.ItemsSource = data.DefaultView;
+                    adapter.Update(data);
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "exception");
+                }
             }
         }
 
@@ -220,13 +316,93 @@ namespace project
             if (booksearchbox.Text == "") { MessageBox.Show("Cnat Be Empty"); }
             else
             {
-                string command = "select from Users where Name = '" + booksearchbox.Text + "' or Author = '" + booksearchbox.Text + "'";
+                
                 SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
-                connection.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                DataTable data = new DataTable();
-                adapter.Fill(data);
+                try
+                {
+                    connection.Open();
+                    string command = "select from Users where Name = '" + booksearchbox.Text + "' or Author = '" + booksearchbox.Text + "'";
+                    SqlCommand cmd = new SqlCommand(command, connection);
+                    cmd.ExecuteNonQuery();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable data = new DataTable("Books");
+                    adapter.Fill(data);
+                    userlistdatagrid.ItemsSource = data.DefaultView;
+                    adapter.Update(data);
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "exception");
+                }
             }
+        }
+
+        private void Delbut_Click(object sender, RoutedEventArgs e)
+        {
+            if (Regex.IsMatch(delnamebox.Text, @"^[a-zA-Z]{3,32}$"))
+            {
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                _connection.Open();
+                string command = "select * from Users where Name ='" + delnamebox.Text.Trim() + "',Type= ";
+                SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                SqlCommand cmd = new SqlCommand(command, _connection);
+                cmd.BeginExecuteNonQuery();
+                if (table.Rows.Count != 1)
+                {
+                    MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
+                }
+                string command2= "DELETE FROM Books WHERE Name ='"+ delnamebox + "' ";
+                SqlCommand cmd2 = new SqlCommand(command2,_connection);
+                try
+                {
+                    cmd2.ExecuteNonQuery();
+                    MessageBox.Show("Delete successful");
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+
+            }
+        }
+
+        private void Vipusersearchbut_Click(object sender, RoutedEventArgs e)
+        {
+            if (vipuserssearchbox.Text == "") { MessageBox.Show("Cant Be Empty"); }
+            else
+            {
+                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                try
+                {
+                    connection.Open();
+                    string command = "select from Users where Name = '" + vipuserssearchbox.Text + "' or Email = '" + vipuserssearchbox.Text + "',Type='"+"VIP"+"'";
+                    SqlCommand cmd = new SqlCommand(command, connection);
+                    cmd.ExecuteNonQuery();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable data = new DataTable("Users");
+                    adapter.Fill(data);
+                    userlistdatagrid.ItemsSource = data.DefaultView;
+                    adapter.Update(data);
+                    connection.Close();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message,"exception");
+                }
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            addbooknamebox.Text = "";
+            addbookauthorbox.Text = "";
+            addbookpricebox.Text = "";
+            addbookyearbox.Text = "";
+            addbooksummarybox.Text = "";
         }
     }
 }
