@@ -86,10 +86,10 @@
                     <TextBlock HorizontalAlignment="Left" FontSize="19" Margin="10,79,0,0" TextWrapping="Wrap" Text="Enter Name Of The Book To Make It Off" VerticalAlignment="Top" Width="361" Height="27"/>
                     <TextBlock HorizontalAlignment="Left" FontSize="19" Margin="10,181,0,0" TextWrapping="Wrap" Text="Enter Time Of Off In Hour" VerticalAlignment="Top" Width="361" Height="27"/>
                     <TextBlock HorizontalAlignment="Left" FontSize="19" Margin="10,274,0,0" TextWrapping="Wrap" Text="Enter Percentage Of Off" VerticalAlignment="Top" Width="361" Height="27"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="497,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="497,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="497,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370"/>
-                    <Button Content="Confirm" FontSize="30" HorizontalAlignment="Left" Margin="571,393,0,0" VerticalAlignment="Top" Width="217" Height="46" Click="Button_Click_2"/>
+                    <TextBox x:Name="offnamebookbox" HorizontalAlignment="Left" Height="23" Margin="497,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370"/>
+                    <TextBox x:Name="offbooktimebox" HorizontalAlignment="Left" Height="23" Margin="497,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370"/>
+                    <TextBox x:Name="offbookpercentagebox" HorizontalAlignment="Left" Height="23" Margin="497,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370"/>
+                    <Button Content="Confirm" Foreground="ForestGreen" Background="LightCyan" FontSize="30" HorizontalAlignment="Left" Margin="571,393,0,0" VerticalAlignment="Top" Width="217" Height="46" Click="Button_Click_2"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Wallet">
@@ -98,7 +98,7 @@
                     <Button x:Name="walletdepositbut" Foreground="Green" Content="Click To Deposit Money" FontSize="23" HorizontalAlignment="Left" Margin="435,349,0,0" VerticalAlignment="Top" Width="251" Height="52" Click="Walletdepositbut_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Stats">
+            <TabItem Header="Stat">
                 <Grid Background="#FFE5E5E5" Margin="0,-4,0,-6">
                     <TextBlock HorizontalAlignment="Left" FontSize="22" Margin="377,76,0,0" TextWrapping="Wrap" Text="Enter Name Of Book To See Stats" VerticalAlignment="Top" Height="34" Width="331"/>
                     <TextBox x:Name="statsbooknamebox" HorizontalAlignment="Left" FontSize="18" Height="30" Margin="377,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331" />

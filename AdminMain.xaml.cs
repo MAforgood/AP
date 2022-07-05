@@ -17,6 +17,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
+using System.Linq.Expressions;
 
 namespace project
 {
@@ -26,9 +27,22 @@ namespace project
 
     public partial class AdminMain : Window
     {
+
         public AdminMain()
         {
+
             InitializeComponent();
+            SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+            _connection.Open();
+            string command = "select * from Books ";
+            SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+            for(int i=0;i<table.Rows.Count; i++)
+            {
+                Books book = new Books(table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), float.Parse(table.Rows[i][3].ToString()),int.Parse(table.Rows[i][4].ToString()), table.Rows[i][5].ToString());
+                Books.allbooks.Add(book);
+            }
         }
 
 
@@ -132,7 +146,26 @@ namespace project
 
         private void Vippricebut_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Succesfully Set!", "Done!");
+            if (double.Parse(vipprice.Text) < 0)
+            {
+                MessageBox.Show("Price Can Not Be Negatve!","Wrong Input");
+            }
+            else
+            {
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                _connection.Open();
+                string command2 = "Update Books SET vipfee='" +float.Parse(vipprice.Text) + "'";
+                SqlCommand cmd2 = new SqlCommand(command2, _connection);
+                try
+                {
+                    cmd2.ExecuteNonQuery();
+                    MessageBox.Show("Vip Fee Set", "Done!");
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void Vipbookbut_Click(object sender, RoutedEventArgs e)
@@ -170,9 +203,38 @@ namespace project
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Off Was Set Succesfully!", "Done!");
+            if (Regex.IsMatch(statsbooknamebox.Text, @"^[a-zA-Z]{3,32}$"))
+            {
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                _connection.Open();
+                string command = "select * from Books where Name ='" + statsbooknamebox.Text.Trim() + "' ";
+                SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                SqlCommand cmd = new SqlCommand(command, _connection);
+                cmd.BeginExecuteNonQuery();
+                if (table.Rows.Count != 1)
+                {
+                    MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
+                }
+                if (int.Parse(offbooktimebox.Text)<24&& int.Parse(offbooktimebox.Text)>0&&float.Parse(offbookpercentagebox.Text)<100&& float.Parse(offbookpercentagebox.Text)>0)
+                {
+                    SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                    _connection.Open();
+                    string command2 = "Update Books SET Offtime='" + offbooktimebox + "',Discount Value='" + offbookpercentagebox + "'";
+                    SqlCommand cmd2 = new SqlCommand(command2, _connection);
+                    try
+                    {
+                        cmd2.ExecuteNonQuery();
+                        MessageBox.Show("Set Successfully");
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
         }
-
         private void Walletincomebut_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Total Income : ", "Income");
@@ -199,6 +261,8 @@ namespace project
                 {
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
+               
+
 
 
                 MessageBox.Show("Sold Numbers:  \nIncome: ", "Stats");
@@ -221,18 +285,7 @@ namespace project
                 {
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
-                string command2 = "select AVG(Rate) From Books Where Name='" + statsbookratebox.Text.Trim() + "' ";
-                SqlCommand cmd2 = new SqlCommand(command2, _connection);
-                string hlp = cmd2.ToString();
-                try
-                {
-                    cmd2.ExecuteNonQuery();
-                    MessageBox.Show("Average Rate : "+hlp, "Done!");
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+               
 
             }
         }
