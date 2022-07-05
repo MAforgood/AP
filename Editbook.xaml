@@ -18,5 +18,9 @@
         <TextBox x:Name="neweditprice" HorizontalAlignment="Left" Height="22" Margin="137,127,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
         <Button x:Name="neweditbut" FontSize="16" Content="Edit" HorizontalAlignment="Left" Margin="184,283,0,0" VerticalAlignment="Top" Width="82" Height="25" Click="Button_Click"/>
         <TextBox x:Name="neweditsummary" HorizontalAlignment="Left" Height="22" Margin="137,162,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
+        <TextBlock HorizontalAlignment="Left" Margin="41,201,0,0" TextWrapping="Wrap" Text="New Image Path" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.464,1.754" Width="91"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41,237,0,0" TextWrapping="Wrap" Text="New Pdf Path" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.464,1.754" Width="91"/>
+        <TextBox x:Name="neweditcoverpathbox" HorizontalAlignment="Left" Height="22" Margin="137,201,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
+        <TextBox x:Name="neweditpdfpathbox" HorizontalAlignment="Left" Height="22" Margin="137,234,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
     </Grid>
 </Window>

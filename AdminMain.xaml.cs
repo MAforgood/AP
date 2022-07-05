@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
 using System.Linq.Expressions;
 
+
 namespace project
 {
     /// <summary>
@@ -40,7 +41,7 @@ namespace project
             adapter.Fill(table);
             for(int i=0;i<table.Rows.Count; i++)
             {
-                Books book = new Books(table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), float.Parse(table.Rows[i][3].ToString()),int.Parse(table.Rows[i][4].ToString()), table.Rows[i][5].ToString());
+                Books book = new Books(table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), float.Parse(table.Rows[i][3].ToString()),int.Parse(table.Rows[i][4].ToString()), table.Rows[i][5].ToString(), table.Rows[i][6].ToString(), table.Rows[i][7].ToString(), int.Parse(table.Rows[i][8].ToString()),float.Parse(table.Rows[i][9].ToString()));
                 Books.allbooks.Add(book);
             }
         }
@@ -186,7 +187,7 @@ namespace project
                 }
                 //SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
                // _connection.Open();
-                string command2 = "Update Books SET Type='"+"VIP"+"'";
+                string command2 = "Update Books SET Type='"+"vip"+"'";
                 SqlCommand cmd2 = new SqlCommand(command2, _connection);
                 try
                 {
@@ -203,11 +204,11 @@ namespace project
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            if (Regex.IsMatch(statsbooknamebox.Text, @"^[a-zA-Z]{3,32}$"))
+            if (Regex.IsMatch(offnamebookbox.Text, @"^[a-zA-Z]{3,32}$"))
             {
                 SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command = "select * from Books where Name ='" + statsbooknamebox.Text.Trim() + "' ";
+                string command = "select * from Books where Name ='" + offnamebookbox.Text.Trim() + "' ";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -220,8 +221,11 @@ namespace project
                 if (int.Parse(offbooktimebox.Text)<24&& int.Parse(offbooktimebox.Text)>0&&float.Parse(offbookpercentagebox.Text)<100&& float.Parse(offbookpercentagebox.Text)>0)
                 {
                     SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                    int hlp = int.Parse(offbooktimebox.Text);
+                    TimeOnly time = new TimeOnly();
+                    time.AddHours(hlp);
                     _connection.Open();
-                    string command2 = "Update Books SET Offtime='" + offbooktimebox + "',Discount Value='" + offbookpercentagebox + "'";
+                    string command2 = "Update Books SET Discount Time='" + time + "',Discount Value='" + float.Parse(offbookpercentagebox.Text) + "'";
                     SqlCommand cmd2 = new SqlCommand(command2, _connection);
                     try
                     {
@@ -244,7 +248,7 @@ namespace project
         {
 
         }
-
+        /*
         private void Statsbooknamebut_Click(object sender, RoutedEventArgs e)
         {
             if (Regex.IsMatch(statsbooknamebox.Text, @"^[a-zA-Z]{3,32}$"))
@@ -268,7 +272,7 @@ namespace project
                 MessageBox.Show("Sold Numbers:  \nIncome: ", "Stats");
             }
         }
-
+        
         private void Statsbookratebut_Click(object sender, RoutedEventArgs e)
         {
             if (Regex.IsMatch(statsbookratebox.Text, @"^[a-zA-Z]{3,32}$"))
@@ -289,10 +293,10 @@ namespace project
 
             }
         }
-
+        */
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            if (addbooknamebox.Text == "" || addbookauthorbox.Text == "" || addbookyearbox.Text == "" || addbookpricebox.Text == "" || addbooksummarybox.Text == "")
+            if (addbooknamebox.Text == "" || addbookauthorbox.Text == "" || addbookyearbox.Text == "" || addbookpricebox.Text == "" || addbooksummarybox.Text == ""||addbookimagepathbox.Text==""||addbookpdfpathbox.Text=="")
             {
                 MessageBox.Show("None Of Fields Can Be Empty!", "Empty Input");
             }
@@ -300,7 +304,7 @@ namespace project
             {
                 SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command = "select * from Users where Name ='" + addbooknamebox.Text.Trim() + "' ";
+                string command = "select * from Books where Name ='" + addbooknamebox.Text.Trim() + "' ";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -320,7 +324,7 @@ namespace project
                         {
                             if (addbooksummarybox.Text.Length > 0 && addbooksummarybox.Text.Length < 300)
                             {
-                                Books book = new Books(addbooknamebox.Text, addbookauthorbox.Text, int.Parse(addbookyearbox.Text), int.Parse(addbookpricebox.Text), addbooksummarybox.Text);
+                                Books book = new Books(addbooknamebox.Text, addbookauthorbox.Text, int.Parse(addbookyearbox.Text), int.Parse(addbookpricebox.Text), addbooksummarybox.Text,addbookimagepathbox.Text,addbookpdfpathbox.Text,0,0);
                                
                                 book.AddTotable();
                                 this.Close();
@@ -347,7 +351,7 @@ namespace project
                 try
                 {
                     connection.Open();
-                    string command = "select from Users where Name = '" + usersearchbox.Text + "' or Email = '" + usersearchbox.Text + "',Type='" + "Normal" + "'";
+                    string command = "select from Users where Name = '" + usersearchbox.Text + "' or Email = '" + usersearchbox.Text + "',Type='" + "normal" + "'";
                     SqlCommand cmd = new SqlCommand(command, connection);
                     cmd.ExecuteNonQuery();
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -366,7 +370,7 @@ namespace project
 
         private void Booklostsearchbut_Click(object sender, RoutedEventArgs e)
         {
-            if (booksearchbox.Text == "") { MessageBox.Show("Cnat Be Empty"); }
+            if (booksearchbox.Text == "") { MessageBox.Show("Cant Be Empty"); }
             else
             {
                 
@@ -397,7 +401,7 @@ namespace project
             {
                 SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command = "select * from Users where Name ='" + delnamebox.Text.Trim() + "',Type= ";
+                string command = "select * from Books where Name ='" + delnamebox.Text.Trim() + "',Type= ";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -407,7 +411,7 @@ namespace project
                 {
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
-                string command2= "DELETE FROM Books WHERE Name ='"+ delnamebox + "' ";
+                string command2= "DELETE FROM Books WHERE Name ='"+ delnamebox.Text.Trim() + "' ";
                 SqlCommand cmd2 = new SqlCommand(command2,_connection);
                 try
                 {
@@ -456,6 +460,8 @@ namespace project
             addbookpricebox.Text = "";
             addbookyearbox.Text = "";
             addbooksummarybox.Text = "";
+            addbookpdfpathbox.Text = "";
+            addbookimagepathbox.Text = "";
         }
     }
 }

@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Data.SqlClient;
-using System.IO;
-using System.Data;
-using System.Data.SqlClient;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -17,10 +12,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 using System.Collections;
+using System.Data.SqlClient;
 
 namespace project
 {
+    public enum Type {normal,vip }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -29,98 +27,67 @@ namespace project
         public MainWindow()
         {
             InitializeComponent();
-            Payment payment = new Payment();
-            UserLogin userLogin = new UserLogin();
-            User user = new User("", "", "", "", "");
-            UserPage userPage = new UserPage(user);
-            userPage.Show();
-            //userLogin.Show();
-            //payment.Show();
         }
-    }
-    public enum Type
-    {
-        normal, VIP
-    }
-    public class User
-    {
-        public string First_Name { get; set; }
-        public string Last_Name { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public double Wallet { get; set; }
-        public string Password { get; set; }
-        public Type type = Type.normal;
-        public List<Book> ShoppingCart = new List<Book>();
-        public List<Book> Books = new List<Book>();
-        public User(string fname, string lname, string pnum, string email, string pass)
-        {
-            First_Name = fname;
-            Last_Name = lname;
-            Phone = pnum;
-            Email = email;
-            Password = pass;
-        }
-    }
-    public class Card
-    {
-        public string Id { get; set; }
-        public int CVV { get; set; }
-        public string Password { get; set; }
-        public DateOnly Expiration { get; set; }
-        public Card(string id,int cvv,string pass,DateOnly date)
-        {
-            Id = id;
-            CVV = cvv;
-            Password = pass;
-            Expiration = date;
 
-        }
-        public static int digitsum(int n)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int m = 0;
-            while (n > 0)
-            {
-                m += n % 10;
-                n /= 10;
-            }
-            return m;
+            
+                NormalUser n = new NormalUser();
+                n.Show();
+                this.Close();
         }
-        public static bool checkid(string id)
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            string[] vs = id.Split(' ');
-            string ID = "";
-            for (int i = 0; i < vs.Length; i++)
-            {
-                ID += vs[i];
-            }
-            int sum = 0;
-            for (int i = ID.Length - 1; i >= 0; i--)
-            {
-                int j = 0;
-                try
-                {
-                    j = int.Parse(ID[i].ToString());
-                }
-                catch { return false; }
-                if (i % 2 == 0)
-                {
-                    sum += digitsum(j * 2);
-                }
-                else
-                    sum += j;
-            }
-            if (sum % 10 == 0)
-            {
-                return true;
-            }
-            else return false;
+            Admin a = new Admin();
+            a.Show();
+            this.Close();
+        }
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            NormalSignin normsign = new NormalSignin();
+            normsign.Show();
+            this.Close();
         }
     }
-    public class Book : IEnumerable
+    public  class Books:IEnumerable
     {
-        public string name { get; set; }
-        public string Writer { get; set; }
+        public static List<Books> allbooks = new List<Books>();
+        public static List<string> allbooksname = new List<string>();
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public int PublishedYear { get; set; }
+        public float Price { get; set; }
+        public string Summary { get; set; }
+        public string Cover_Path { get; set; }
+        public string Pdf_Path { get; set; }
+        public int Offtime { get; set; }
+        public float Discount_Value { get; set; }
+       public Type type { get; set; }
+        public int id { get; set; }
+        public List<int> Rating { get; set; }
+        public float Rate { get;  }
+        public float Total_Income { get; }
+        public int Total_Sale { get; }
+
+
+        public Books(string Name, string Author, float Price, int PublishedYear, string Summary,string Cover_Path,string Pdf_Path, int Offtime, float Discount_Value)
+        {
+            this.Name = Name;
+            this.Author = Author;
+            this.PublishedYear = PublishedYear;
+            this.Price = Price;
+            this.Summary = Summary;
+            this.Cover_Path = Cover_Path;
+            this.Pdf_Path = Pdf_Path;
+            this.Offtime = Offtime;
+            this.Discount_Value = Discount_Value;
+            type = Type.normal;
+            if (Rating != null)
+            {
+                Rate = Rating.Sum(x => x / Rating.Count);
+            }
+        }
         public IEnumerator GetEnumerator()
         {
             foreach (var item in this)
@@ -134,56 +101,17 @@ namespace project
             return this.GetEnumerator();
         }
     }
-    class Management
-    {
 
-    }
     static class ExtentionMetodes
     {
-        public static List<Book> search(this IEnumerable<Book> data,string _name)
-        {
-            List<Book> list = data.Where(x => x.name.Contains(_name)||x.Writer.Contains(_name)).Select(x => x).ToList();
-            return list;
-        }
-        public static void AddTotable(this User user)
+        public static void AddTotable(this Books book)
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
             connection.Open();
-            string Command = "insert into Users values('"+user.Email.Trim()+"','"+user.First_Name.Trim()+"','"+user.Last_Name.Trim()+"','"+user.Phone.Trim()+",'"+0+"'')";
+            string Command = "insert into Users(Name,Author,Published Year,Price,Summary,Cover,Pdf Path,Type,vipfee) values('" + book.Name.Trim() + "','" + book.Author.Trim() + "','" + book.PublishedYear + "','" + book.Price + " ','"+book.Summary.Trim()+ "','" + book.Cover_Path.Trim() + "','" + book.Pdf_Path.Trim() + "','"+"normal"+"','"+0+"'";
             SqlCommand cmd = new SqlCommand(Command, connection);
             cmd.BeginExecuteNonQuery();
             connection.Close();
-        }
-    }
-    class Helper : IMultiValueConverter
-    {
-
-        public object Convert(object[] values, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
-
-        {
-
-            if (values[0] is bool && values[1] is bool)
-
-            {
-
-                bool hasText = !(bool)values[0];
-
-                bool hasFocus = (bool)values[1];
-
-
-
-                if (hasFocus || hasText)
-
-                    return Visibility.Collapsed;
-
-            }
-
-            return Visibility.Visible;
-
-        }
-        public object[] ConvertBack(object value, System.Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
     }
 

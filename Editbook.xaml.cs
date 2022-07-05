@@ -42,7 +42,7 @@ namespace project
                             {
                                 SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
                                 _connection.Open();
-                                string command2 = "Update Books SET Name='" + neweditname + "',Author='" + neweditauthor + "',Publishe Year='" + newedityear + "',Price='" + neweditprice + "',Summary='" + neweditsummary + "',  ";
+                                string command2 = "Update Books SET Name='" + neweditname.Text.Trim() + "',Author='" + neweditauthor.Text.Trim() + "',Publishe Year='" + newedityear.Text.Trim() + "',Price='" + neweditprice.Text.Trim() + "',Summary='" + neweditsummary.Text.Trim() + "',,Cover_path='" + neweditcoverpathbox.Text.Trim() + "',,Pdf_Path='" + neweditpdfpathbox.Text.Trim() + "' ";
                                 SqlCommand cmd2 = new SqlCommand(command2, _connection);
                                 try
                                 {
