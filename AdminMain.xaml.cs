@@ -33,7 +33,7 @@ namespace project
         {
 
             InitializeComponent();
-            SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+            SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
             _connection.Open();
             string command = "select * from Books ";
             SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
@@ -47,7 +47,7 @@ namespace project
         }
 
 
-
+/*
         private static void Uploader(string filename, Stream Data)
 
         {
@@ -121,14 +121,14 @@ namespace project
 
             }
         }
-
+        */
         private void Editbut_Click(object sender, RoutedEventArgs e)
         {
-            if (Regex.IsMatch(editnamebox.Text, @"^[a-zA-Z]{3,32}$"))
+            if (editnamebox.Text.Length>0&&editnamebox.Text.Length<50)
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command = "select * from Users where Name ='" + editnamebox.Text.Trim() + "' ";
+                string command = "select * from Books where Name ='" + editnamebox.Text.Trim() + "' ";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -142,6 +142,10 @@ namespace project
                 Editbook edit = new Editbook();
                 edit.Show();
             }
+            else
+            {
+                MessageBox.Show("Wrong Format!");
+            }
             
         }
 
@@ -153,7 +157,7 @@ namespace project
             }
             else
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
                 string command2 = "Update Books SET vipfee='" +float.Parse(vipprice.Text) + "'";
                 SqlCommand cmd2 = new SqlCommand(command2, _connection);
@@ -171,11 +175,11 @@ namespace project
 
         private void Vipbookbut_Click(object sender, RoutedEventArgs e)
         {
-            if (Regex.IsMatch(vipbooksbox.Text, @"^[a-zA-Z]{3,32}$"))
+            if (vipbooksbox.Text.Length>0&& vipbooksbox.Text.Length<50)
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command = "select * from Books where Name ='" + vipbooksbox.Text.Trim() + "' ";
+                string command = "select * from Books where Name ='" + vipbooksbox.Text.Trim() + "'";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -187,7 +191,7 @@ namespace project
                 }
                 //SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
                // _connection.Open();
-                string command2 = "Update Books SET Type='"+"vip"+"'";
+                string command2 = "Update Books SET Type='"+"vip"+"';";
                 SqlCommand cmd2 = new SqlCommand(command2, _connection);
                 try
                 {
@@ -204,11 +208,11 @@ namespace project
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            if (Regex.IsMatch(offnamebookbox.Text, @"^[a-zA-Z]{3,32}$"))
+            if (offnamebookbox.Text.Length > 0 && offnamebookbox.Text.Length < 50)
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command = "select * from Books where Name ='" + offnamebookbox.Text.Trim() + "' ";
+                string command = "select * from Books where Name ='" + offnamebookbox.Text.Trim() + "'";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -218,9 +222,10 @@ namespace project
                 {
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
-                if (int.Parse(offbooktimebox.Text)<24&& int.Parse(offbooktimebox.Text)>0&&float.Parse(offbookpercentagebox.Text)<100&& float.Parse(offbookpercentagebox.Text)>0)
+                /*
+                if (float.Parse(offbookpercentagebox.Text)<100&& float.Parse(offbookpercentagebox.Text)>0)
                 {
-                    SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                    SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                     int hlp = int.Parse(offbooktimebox.Text);
                     TimeOnly time = new TimeOnly();
                     time.AddHours(hlp);
@@ -237,6 +242,7 @@ namespace project
                         MessageBox.Show(ex.Message);
                     }
                 }
+                */
             }
         }
         private void Walletincomebut_Click(object sender, RoutedEventArgs e)
@@ -300,11 +306,11 @@ namespace project
             {
                 MessageBox.Show("None Of Fields Can Be Empty!", "Empty Input");
             }
-            if (Regex.IsMatch(addbooknamebox.Text, @"^[a-zA-Z]{3,32}$"))
-            {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+           // if (editnamebox.Text.ToString().Length>0&& editnamebox.Text.ToString().Length<50)
+           // {
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command = "select * from Books where Name ='" + addbooknamebox.Text.Trim() + "' ";
+                string command = "select * from Books where Name ='" + addbooknamebox.Text.ToString().Trim() + "'";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -314,9 +320,9 @@ namespace project
                 {
                     MessageBox.Show("This Book Already Existed", "Repetition"); ; return;
                 }
+            _connection.Close();
 
-
-                if (Regex.IsMatch(addbookauthorbox.Text, @"^[a-zA-Z]{3,32}$"))
+                if (Regex.IsMatch(addbookauthorbox.Text, @"^[a-zA-Z/ ]{3,32}$"))
                 {
                     if (int.Parse(addbookyearbox.Text) > 0 && int.Parse(addbookyearbox.Text) < 2022)
                     {
@@ -325,9 +331,22 @@ namespace project
                             if (addbooksummarybox.Text.Length > 0 && addbooksummarybox.Text.Length < 300)
                             {
                                 Books book = new Books(addbooknamebox.Text, addbookauthorbox.Text, int.Parse(addbookyearbox.Text), int.Parse(addbookpricebox.Text), addbooksummarybox.Text,addbookimagepathbox.Text,addbookpdfpathbox.Text,0,0);
-                               
-                                book.AddTotable();
-                                this.Close();
+
+                            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                            connection.Open();
+                            string Command2 = "insert into Books(Id,Name,Author,Published Year,Price,Summary,Cover Path,Pdf Path,Type) values('"+book.id+"','" + book.Name.ToString().Trim() + "','" + book.Author.ToString().Trim() + "','" + book.PublishedYear + "','" + book.Price + " ','" + book.Summary.ToString().Trim() + "','" + book.Cover_Path.ToString().Trim() + "','" + book.Pdf_Path.ToString().Trim() + "','"+book.Offtime+ "','" + book.Discount_Value + "','" + book.Rating + "','" + book.Total_Sale + "','" + book.Total_Income + "','" + "0" + "')";
+                            SqlCommand cmd2 = new SqlCommand(Command2, connection);
+                            cmd2.BeginExecuteNonQuery();
+                            connection.Close();
+                            MessageBox.Show("The Book Was Added!","Successful Attempt");
+                            addbooknamebox.Text = "";
+                            addbookauthorbox.Text = "";
+                            addbookpricebox.Text = "";
+                            addbookyearbox.Text = "";
+                            addbooksummarybox.Text = "";
+                            addbookpdfpathbox.Text = "";
+                            addbookimagepathbox.Text = "";
+                            
 
                             }
                             else { MessageBox.Show("It Is Not In Correct Format","Summary Format!"); }
@@ -337,8 +356,8 @@ namespace project
                     else { MessageBox.Show("It Is Not In Correct Format", "Year Format!"); }
                 }
                 else { MessageBox.Show("It Is Not In Correct Format", "Author Format!"); }
-            }
-            else { MessageBox.Show("It Is Not In Correct Format", "Name Format!"); }
+           // }
+           // else { MessageBox.Show("It Is Not In Correct Format", "Name Format!"); }
         }
 
 
@@ -347,11 +366,11 @@ namespace project
             if (usersearchbox.Text == "") { MessageBox.Show("Cnat Be Empty"); }
             else
             {
-                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 try
                 {
                     connection.Open();
-                    string command = "select from Users where Name = '" + usersearchbox.Text + "' or Email = '" + usersearchbox.Text + "',Type='" + "normal" + "'";
+                    string command = "select * from Users where (Lastname = '" + usersearchbox.Text + "' or Email = '" + usersearchbox.Text + "') And Type='" + "normal" + "'";
                     SqlCommand cmd = new SqlCommand(command, connection);
                     cmd.ExecuteNonQuery();
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -373,18 +392,17 @@ namespace project
             if (booksearchbox.Text == "") { MessageBox.Show("Cant Be Empty"); }
             else
             {
-                
-                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 try
                 {
                     connection.Open();
-                    string command = "select from Users where Name = '" + booksearchbox.Text + "' or Author = '" + booksearchbox.Text + "'";
+                    string command = "select * from Books where Name = '" + booksearchbox.Text + "' or Author = '" + booksearchbox.Text + "'";
                     SqlCommand cmd = new SqlCommand(command, connection);
                     cmd.ExecuteNonQuery();
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     DataTable data = new DataTable("Books");
                     adapter.Fill(data);
-                    userlistdatagrid.ItemsSource = data.DefaultView;
+                    booklisstdatagrid.ItemsSource = data.DefaultView;
                     adapter.Update(data);
                     connection.Close();
                 }
@@ -397,11 +415,11 @@ namespace project
 
         private void Delbut_Click(object sender, RoutedEventArgs e)
         {
-            if (Regex.IsMatch(delnamebox.Text, @"^[a-zA-Z]{3,32}$"))
+            if (delnamebox.Text.Length>0&& delnamebox.Text.Length<50)
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command = "select * from Books where Name ='" + delnamebox.Text.Trim() + "',Type= ";
+                string command = "select * from Books where Name ='" + delnamebox.Text.Trim() + "'";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -411,8 +429,10 @@ namespace project
                 {
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
-                string command2= "DELETE FROM Books WHERE Name ='"+ delnamebox.Text.Trim() + "' ";
-                SqlCommand cmd2 = new SqlCommand(command2,_connection);
+                _connection.Close();
+                SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                string command2= "DELETE FROM Books WHERE Name ='"+ delnamebox.Text.Trim() + "'";
+                SqlCommand cmd2 = new SqlCommand(command2,_connection2);
                 try
                 {
                     cmd2.ExecuteNonQuery();
@@ -422,8 +442,10 @@ namespace project
                 {
                     MessageBox.Show(ex.Message);
                 }
-
-
+            }
+            else
+            {
+                MessageBox.Show("Wrong Format!");
             }
         }
 
@@ -432,11 +454,11 @@ namespace project
             if (vipuserssearchbox.Text == "") { MessageBox.Show("Cant Be Empty"); }
             else
             {
-                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 try
                 {
                     connection.Open();
-                    string command = "select from Users where Name = '" + vipuserssearchbox.Text + "' or Email = '" + vipuserssearchbox.Text + "',Type='"+"VIP"+"'";
+                    string command = "select * from Users where (Lastname = '" + vipuserssearchbox.Text + "' or Email = '" + vipuserssearchbox.Text + " ') And Type='"+"VIP"+"'";
                     SqlCommand cmd = new SqlCommand(command, connection);
                     cmd.ExecuteNonQuery();
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
