@@ -39,11 +39,11 @@ namespace project
             SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
             DataTable table = new DataTable();
             adapter.Fill(table);
-            for(int i=0;i<table.Rows.Count; i++)
-            {
-                Books book = new Books(table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), float.Parse(table.Rows[i][3].ToString()),int.Parse(table.Rows[i][4].ToString()), table.Rows[i][5].ToString(), table.Rows[i][6].ToString(), table.Rows[i][7].ToString(), int.Parse(table.Rows[i][8].ToString()),float.Parse(table.Rows[i][9].ToString()));
-                Books.allbooks.Add(book);
-            }
+           // for(int i=0;i<table.Rows.Count; i++)
+           // {
+            //    Books book = new Books(table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), float.Parse(table.Rows[i][3].ToString()),int.Parse(table.Rows[i][4].ToString()), table.Rows[i][5].ToString(), table.Rows[i][6].ToString(), table.Rows[i][7].ToString(), int.Parse(table.Rows[i][8].ToString()),float.Parse(table.Rows[i][9].ToString()));
+             //   Books.allbooks.Add(book);
+           // }
         }
 
 
@@ -159,7 +159,7 @@ namespace project
             {
                 SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command2 = "Update Books SET vipfee='" +float.Parse(vipprice.Text) + "'";
+                string command2 = "Update Books SET vipfee='" +float.Parse(vipprice.Text) + "'where Name='"+vipprice.Text+"'";
                 SqlCommand cmd2 = new SqlCommand(command2, _connection);
                 try
                 {
@@ -189,10 +189,13 @@ namespace project
                 {
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
+                _connection.Close();
+                SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                _connection2.Open();
                 //SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
-               // _connection.Open();
-                string command2 = "Update Books SET Type='"+"vip"+"';";
-                SqlCommand cmd2 = new SqlCommand(command2, _connection);
+                // _connection.Open();
+                string command2 = "Update Books SET Type='"+"1"+"'where Name='"+vipbooksbox.Text+"'";
+                SqlCommand cmd2 = new SqlCommand(command2, _connection2);
                 try
                 {
                     cmd2.ExecuteNonQuery();
@@ -222,6 +225,7 @@ namespace project
                 {
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
+                _connection.Close();
                 /*
                 if (float.Parse(offbookpercentagebox.Text)<100&& float.Parse(offbookpercentagebox.Text)>0)
                 {
@@ -432,6 +436,7 @@ namespace project
                 _connection.Close();
                 SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                 string command2= "DELETE FROM Books WHERE Name ='"+ delnamebox.Text.Trim() + "'";
+                _connection2.Open();
                 SqlCommand cmd2 = new SqlCommand(command2,_connection2);
                 try
                 {

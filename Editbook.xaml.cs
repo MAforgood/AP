@@ -30,9 +30,9 @@ namespace project
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Regex.IsMatch(neweditname.Text, @"^[a-zA-Z]{3,32}$"))
+            if (neweditname.Text.Length>0&& neweditname.Text.Length<50)
             {
-                if (Regex.IsMatch(neweditauthor.Text, @"^[a-zA-Z]{3,32}$"))
+                if (Regex.IsMatch(neweditauthor.Text, @"^[a-zA-Z/ ]{3,32}$"))
                 {
                     if (int.Parse(newedityear.Text) > 0 && int.Parse(newedityear.Text) < 2022)
                     {
@@ -40,19 +40,19 @@ namespace project
                         {
                             if (neweditsummary.Text.Length > 0 && neweditsummary.Text.Length < 300)
                             {
-                                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
                                 _connection.Open();
-                                string command2 = "Update Books SET Name='" + neweditname.Text.Trim() + "',Author='" + neweditauthor.Text.Trim() + "',Publishe Year='" + newedityear.Text.Trim() + "',Price='" + neweditprice.Text.Trim() + "',Summary='" + neweditsummary.Text.Trim() + "',,Cover_path='" + neweditcoverpathbox.Text.Trim() + "',,Pdf_Path='" + neweditpdfpathbox.Text.Trim() + "' ";
+                                string command2 = "Update Books SET Name='" + neweditname.Text.Trim() + "',Author='" + neweditauthor.Text.Trim() + "',Published Year='" + int.Parse(newedityear.Text) + "',Price='" + float.Parse(neweditprice.Text)+ "',Summary='" + neweditsummary.Text.Trim() + "',Cover_Path='" + neweditcoverpathbox.Text.Trim() + "',Pdf_Path='" + neweditpdfpathbox.Text.Trim() + "'where Name='"+currentnamebox.Text+"' ";
                                 SqlCommand cmd2 = new SqlCommand(command2, _connection);
                                 try
                                 {
-                                    cmd2.ExecuteNonQuery();
+                                    cmd2.BeginExecuteNonQuery();
                                     MessageBox.Show("Edited Successfully");
-                                }
+                               }
                                 catch (SqlException ex)
                                 {
                                     MessageBox.Show(ex.Message);
-                                }
+                               }
                             }
                             else
                             {
