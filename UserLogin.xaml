@@ -5,14 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:project"
         mc:Ignorable="d"
-        Title="UserLogin" Height="300" Width="400" WindowStartupLocation="CenterScreen">
+        Title="UserLogin" Height="350" Width="400" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
                         <Grid>
-                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="1"/>
+                            <Border BorderBrush="#FF7D8683" BorderThickness="1">
+                                <Border.Background>
+                                    <ImageBrush/>
+                                </Border.Background>
+                            </Border>
                             <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
                             <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center"
                                Visibility="Collapsed" Foreground="#FFBBB8B8" FontFamily="Arial Black"/>
@@ -34,23 +38,35 @@
         </Style>
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="White"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="36*"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="34*"/>
+            <RowDefinition Height="75*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="fname" Grid.Row="1" Style="{StaticResource MyWaterMarkStyle}" Tag="firstname" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" Margin="99,0,0,0"/>
-        <TextBox x:Name="lname" TextWrapping="Wrap" Style="{StaticResource MyWaterMarkStyle}" Tag="lastname" VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" Margin="99,0,85,0" Grid.Row="2"/>
-        <TextBox x:Name="pnum" Grid.Row="2" HorizontalAlignment="Left" Style="{StaticResource MyWaterMarkStyle}" Tag="phone number"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29"  Margin="99,40,0,0" Grid.RowSpan="2"/>
-        <TextBox x:Name="email" Grid.Row="0" HorizontalAlignment="Left" Style="{StaticResource MyWaterMarkStyle}" Tag="email" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" Margin="99,0,0,0"/>
-        <TextBox x:Name="pass" Grid.Row="3" HorizontalAlignment="Left" Style="{StaticResource MyWaterMarkStyle}" Tag="Password" VerticalAlignment="Top" Width="216" Margin="99,40,0,0" Grid.RowSpan="2"/>
-        <Button x:Name="normlogbutt" Grid.Row="5" Content="Log In" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="82" Height="25" Click="Button_Click" Margin="0,40,0,0" Grid.RowSpan="2"/>
-        <Button x:Name="cancel_Butt" Grid.Row="6" Content="Back" Margin="322,12,10,5" />
-        <TextBlock x:Name="Email_error" Visibility="Collapsed" Grid.Row="5" Text="Invalid Email !" FontSize="15" FontFamily="Elephant" Margin="99,6,71,11" OpacityMask="#FF291E1E">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="79*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="fname" Grid.Row="1" Style="{StaticResource MyWaterMarkStyle}" Tag="firstname" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" Margin="4,14,0,0" Cursor="IBeam" Grid.Column="1" Height="24"/>
+        <TextBox x:Name="lname" Grid.Row="2" Style="{StaticResource MyWaterMarkStyle}" Tag="lastname" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" Margin="4,10,0,0" Cursor="IBeam" Grid.Column="1" Height="24"/>
+        <TextBox x:Name="pnum" Grid.Row="3" HorizontalAlignment="Left" Style="{StaticResource MyWaterMarkStyle}" Tag="phone number"  TextWrapping="Wrap"  VerticalAlignment="Center" Width="216" RenderTransformOrigin="0.492,0.651" Cursor="IBeam" Grid.Column="1" Height="24" Margin="4,0,0,0"/>
+        <TextBox x:Name="email" Background="Transparent" HorizontalAlignment="Left" Style="{StaticResource MyWaterMarkStyle}" Tag="email" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" Margin="4,14,0,0" Cursor="IBeam" Grid.Column="1" Height="24"/>
+        <TextBox x:Name="pass" Grid.Row="4" HorizontalAlignment="Left" Style="{StaticResource MyWaterMarkStyle}" Tag="Password" VerticalAlignment="Center" Width="216" Cursor="IBeam" Grid.Column="1" Height="24" Margin="4,0,0,0"/>
+        <Button x:Name="normlogbutt" Grid.Row="6" Content="Log In" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="216" Height="25" Click="Button_Click" Margin="4,10,0,0" Cursor="Hand" Foreground="#FFE0E0E0" BorderBrush="{x:Null}" Grid.Column="1" Background="#FF1880FC"/>
+        <Button x:Name="Back_Butt" Background="{x:Null}" Margin="0,-1,30,10" BorderBrush="{x:Null}" Click="Back_Butt_Click" Cursor="Hand">
+            <Image Source="/786399.png" Cursor="Hand" Width="26"/>
+        </Button>
+        <TextBlock x:Name="Email_error" Visibility="Collapsed" Grid.Row="5" Text="Invalid Email !" FontSize="15" FontFamily="Elephant" Margin="4,6,82,2" OpacityMask="#FF291E1E" Grid.Column="1">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFC50909" Offset="0.006"/>
@@ -58,7 +74,7 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock x:Name="Repeated_error" Visibility="Collapsed" Grid.Row="5" Text="This email already exists !" FontSize="15" FontFamily="Elephant" Margin="76,5,94,13" OpacityMask="#FF291E1E">
+        <TextBlock x:Name="Repeated_error" Visibility="Collapsed" Grid.Row="5" Text="This email already exists !" FontSize="15" FontFamily="Elephant" Margin="6,5,75,3" OpacityMask="#FF291E1E" Grid.Column="1">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFC50909" Offset="0.006"/>
@@ -67,7 +83,7 @@
             </TextBlock.Foreground>
         </TextBlock>
 
-        <TextBlock x:Name="Phone_error" Visibility="Collapsed" Grid.Row="5" Text="Invalid Phone number !" FontSize="15" FontFamily="Elephant" Margin="76,5,94,13" OpacityMask="#FF291E1E">
+        <TextBlock x:Name="Phone_error" Visibility="Collapsed" Grid.Row="5" Text="Invalid Phone number !" FontSize="15" FontFamily="Elephant" Margin="6,5,83,3" OpacityMask="#FF291E1E" Grid.Column="1">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFC50909" Offset="0.006"/>
@@ -75,7 +91,7 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock x:Name="Pass_error" Visibility="Collapsed" Grid.Row="5" Text="Invalid Password !" FontSize="15" FontFamily="Elephant" Margin="76,5,108,11" OpacityMask="#FF291E1E">
+        <TextBlock x:Name="Pass_error" Visibility="Collapsed" Grid.Row="5" Text="Invalid Password !" FontSize="15" FontFamily="Elephant" Margin="6,5,89,1" OpacityMask="#FF291E1E" Grid.Column="1">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFC50909" Offset="0.006"/>
@@ -83,7 +99,7 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock x:Name="Empty_error" Visibility="Collapsed" Grid.Row="5" Text="Please fill the fields !" FontSize="15" FontFamily="Elephant" Margin="76,5,116,11" OpacityMask="#FF291E1E">
+        <TextBlock x:Name="Empty_error" Visibility="Collapsed" Grid.Row="5" Text="Please fill the fields !" FontSize="15" FontFamily="Elephant" Margin="6,5,98,1" OpacityMask="#FF291E1E" Grid.Column="1">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFC50909" Offset="0.006"/>
@@ -91,7 +107,7 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock x:Name="Name_error" Visibility="Collapsed" Grid.Row="4" Text="Invalid Name(at least 3 letters and at most 32)!" FontSize="15" FontFamily="Elephant" Margin="44,40,35,14" OpacityMask="#FF291E1E" Grid.RowSpan="2">
+        <TextBlock x:Name="Name_error" Visibility="Collapsed" Grid.Row="5" Text="Invalid Name(at least 3 letters and at most 32)!" FontSize="12" FontFamily="Elephant" Margin="4,5,6,11" OpacityMask="#FF291E1E" Grid.Column="1">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFC50909" Offset="0.006"/>

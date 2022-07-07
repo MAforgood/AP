@@ -35,15 +35,17 @@ namespace project
             Empty_error.Visibility = Visibility.Collapsed;
             Email_error.Visibility = Visibility.Collapsed;
             Phone_error.Visibility = Visibility.Collapsed;
+            Pass_error.Visibility = Visibility.Collapsed;
             if (fname.Text == "" || lname.Text == "" || pnum.Text == "" || email.Text == "" || pass.Text == "")
             {
                 Empty_error.Visibility = Visibility.Visible;
+                return;
             }
             if (Regex.IsMatch(email.Text, @"^.{1,32}@.{1,32}\..{1,32}$"))
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\Database.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command = "select * from Users where email ='"+email.Text.Trim()+"' ";
+                string command = "select * from Users where Email ='"+email.Text.Trim()+"' ";
                 SqlDataAdapter adapter = new SqlDataAdapter(command,_connection);
                 DataTable table = new DataTable(); 
                 adapter.Fill(table);
@@ -68,15 +70,22 @@ namespace project
                                 this.Close();
                                 userPage.Show();
                             }
-                            else { Pass_error.Visibility = Visibility.Visible; }
+                            else { Pass_error.Visibility = Visibility.Visible;return; }
                         }
-                        else { Phone_error.Visibility = Visibility.Visible; }
+                        else { Phone_error.Visibility = Visibility.Visible;return; }
                     }
-                    else { Name_error.Visibility = Visibility.Visible; }
+                    else { Name_error.Visibility = Visibility.Visible;return; }
                 }
-                else { Name_error.Visibility = Visibility.Visible; }
+                else { Name_error.Visibility = Visibility.Visible;return; }
             }
-            else { Email_error.Visibility = Visibility.Visible; }
+            else { Email_error.Visibility = Visibility.Visible; return;  }
+        }
+
+        private void Back_Butt_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            this.Close();
+            mainWindow.Show();
         }
     }
 }
