@@ -1,0 +1,65 @@
+﻿<Window x:Class="project.BookPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:project"
+        mc:Ignorable="d"
+        Title="BookPage" Height="700" Width="600">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding bookofpage.Cover_Path}" Opacity="0.4"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="142*"/>
+            <RowDefinition Height="170*"/>
+            <RowDefinition Height="65*"/>
+            <RowDefinition Height="61*"/>
+            <RowDefinition Height="55*"/>
+            <RowDefinition Height="179*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="72*"/>
+            <ColumnDefinition Width="225*"/>
+            <ColumnDefinition Width="175*"/>
+            <ColumnDefinition Width="122*"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="Book_Cover" Source="{Binding bookofpage.Cover_Path}" Margin="58,46,34,33" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+        <Button x:Name="Star_1" Background="Transparent" Grid.Row="2" Grid.Column="1" Margin="82,0,108,11" Cursor="Hand" BorderBrush="{x:Null}" Height="51" VerticalAlignment="Bottom" Click="Star_1_Click">
+            <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
+        <Button x:Name="Star_2" Grid.Row="2" Grid.Column="1" Margin="133,4,56,11" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" Click="Star_2_Click">
+            <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
+        <Button x:Name="Star_3" Grid.Row="2" Grid.Column="1" Margin="186,4,2,11" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" Click="Star_3_Click">
+            <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
+        <Button x:Name="Star_4" Grid.Row="2" Grid.Column="2" Margin="19,4,120,11" Cursor="Hand" BorderBrush="{x:Null}" Background="{x:Null}" Click="Star_4_Click">
+            <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
+        <Button x:Name="Star_5" Grid.Row="2" Grid.Column="2" Margin="70,5,70,0" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" Height="51" VerticalAlignment="Top" Click="Star_5_Click">
+            <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
+        <TextBlock x:Name="Book_Name" Text="{Binding bookofpage.Name}" TextAlignment="Center" FontSize="15" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="82,10,54,9" FontFamily="Britannic Bold"/>
+        <TextBlock x:Name="Book_Rating" Text="{Binding Rating}" Grid.Row="2" Grid.Column="3" Margin="19,17,62,11" Cursor="Arrow"/>
+        <Button x:Name="Book_Pdf" Background="Transparent"  Grid.Row="2" Margin="20,5,10,0" Click="Book_Pdf_Click" Cursor="Hand" BorderBrush="{x:Null}">
+            <Image Source="/pdf-download-icon-png-22.jpg" Height="41"/>
+        </Button>
+        <Button Grid.ColumnSpan="2" Margin="0,0,227,88" Background="{x:Null}" BorderBrush="{x:Null}" ClickMode="Press" Click="Button_Click">
+            <Image Source="/white-back-icon-3.jpg"/>
+        </Button>
+        <Button x:Name="Add_Bookmark_Butt" Margin="22,10,44,56" Grid.Column="3" Grid.Row="3" Grid.RowSpan="2" Click="Add_Bookmark_Butt_Click" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand">
+            <Image Source="{Binding sourcee}"/>
+        </Button>
+        <Button x:Name="Book_Buy" Content="{Binding bookofpage.Price}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="113,4,89,10" Cursor="Hand" Click="Book_Buy_Click" Background="#FF3BF66F"/>
+        <TextBlock x:Name="Book_Summary" TextWrapping="WrapWithOverflow" Text="{Binding bookofpage.Summary}" Margin="26,28,28,28" Grid.Row="5" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="4">
+            <TextBlock.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White"/>
+                    <GradientStop Color="#FFD2D2D2" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBlock.Background>
+        </TextBlock>
+    </Grid>
+
+</Window>
