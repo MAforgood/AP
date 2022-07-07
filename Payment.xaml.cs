@@ -19,15 +19,19 @@ namespace project
     /// </summary>
     public partial class Payment : Window
     {
-        public Payment()
+        public bool Boolean { get; set; }
+        public float price { get; set; }
+        public Payment(float _price)
         {
+            price = _price;
             InitializeComponent();
         }
         private void Cancel(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void Pay_Butt_Click(object sender, RoutedEventArgs e)
         {
             Expire_error.Visibility = Visibility.Collapsed;
             Empty_error.Visibility = Visibility.Collapsed;
@@ -37,16 +41,17 @@ namespace project
             if (Card_No.Text == "" || CVV.Text == "" || Year.Text == "" || Month.Text == "")
             {
                 Empty_error.Visibility = Visibility.Visible;
+                return;
             }
             else
             {
                 string Card_no = Card_No.Text;
-                int Cvv=0;
+                int Cvv = 0;
                 try
                 {
                     Cvv = int.Parse(CVV.Text);
                 }
-                catch { Cvv_error.Visibility = Visibility.Visible; }
+                catch { Cvv_error.Visibility = Visibility.Visible; return; }
                 string pass = password.Text;
                 if (Card.checkid(Card_no))
                 {
@@ -67,36 +72,36 @@ namespace project
                         if (year < DateTime.Now.Year)
                         {
                             Expire_error.Visibility = Visibility.Visible;
-                            
+                            return;
                         }
                         else
                         {
                             if (year == DateTime.Now.Year && month <= DateTime.Now.Month)
                             {
                                 Expire_error.Visibility = Visibility.Visible;
-                                
+                                return;
                             }
                             else
                             {
-                                DateOnly date = new DateOnly(year, month,1);
-                                Card card = new Card(Card_no,Cvv,pass,date);
+                                DateOnly date = new DateOnly(year, month, 1);
+                                Card card = new Card(Card_no, Cvv, pass, date);
+                                Boolean = true;
                                 this.Close();
-                                
                             }
                         }
                     }
                     else
                     {
-                        Cvv_error.Visibility = Visibility.Visible;
-                        
+                        Cvv_error.Visibility = Visibility.Visible; return;
                     }
                 }
                 else
                 {
-                    No_error.Visibility = Visibility.Visible;
-                    
+                    No_error.Visibility = Visibility.Visible; return;
                 }
+
             }
+
         }
     }
 }

@@ -44,15 +44,15 @@
             <RowDefinition Height="54*"/>
             <RowDefinition Height="54*"/>
             <RowDefinition Height="99*"/>
-            <RowDefinition Height="184*"/>
-            <RowDefinition Height="115*"/>
+            <RowDefinition Height="85*"/>
+            <RowDefinition Height="214*"/>
         </Grid.RowDefinitions>
-        <TextBox Margin="76,78,88,11" FontSize="15" Style="{StaticResource MyWaterMarkStyle}" Tag="Card No" x:Name="Card_No" RenderTransformOrigin="0.32,0.513" Background="Transparent" Grid.ColumnSpan="3" TextAlignment="Left" Grid.RowSpan="2"/>
-        <TextBox FontSize="15" Style="{StaticResource MyWaterMarkStyle}" Tag="CVV" Margin="76,5,29,6" x:Name="CVV" RenderTransformOrigin="0.32,0.513" Background="Transparent" Grid.Row="2" Grid.Column="0"/>
-        <TextBox FontSize="15"  Grid.Row="2" Grid.Column="1" Style="{StaticResource MyWaterMarkStyle}" Tag= "Year" Margin="10,5,29,6" x:Name="Year" RenderTransformOrigin="0.32,0.513" Background="#FFEDE9E9"/>
-        <TextBox FontSize="15" Grid.Row="2" Style="{StaticResource MyWaterMarkStyle}" Tag="Month" Margin="1,5,88,8" x:Name="Month" RenderTransformOrigin="0.32,0.513" Background="#FFEDE9E9" Grid.Column="2"/>
-        <Button Grid.Row="4" Content="Pay" Grid.ColumnSpan="2" Margin="10,56,138,72" Click="Button_Click" FontFamily="Arial Rounded MT Bold" Grid.Column="1" Foreground="White" Background="#FF40B475"/>
-        <Button Content="Cancel" FontFamily="Arial Rounded MT Bold" Foreground="White" Background="Red" Margin="126,56,29,72" Grid.Row="4" Click="Cancel"/>
+        <TextBox Margin="76,78,88,11" FontSize="15" Style="{StaticResource MyWaterMarkStyle}" Tag="Card No" x:Name="Card_No" RenderTransformOrigin="0.32,0.513" Background="Transparent" Grid.ColumnSpan="3" TextAlignment="Left" Grid.RowSpan="2" Cursor="IBeam"/>
+        <TextBox FontSize="15" Style="{StaticResource MyWaterMarkStyle}" Tag="CVV" Margin="76,5,29,6" x:Name="CVV" RenderTransformOrigin="0.32,0.513" Background="Transparent" Grid.Row="2" Grid.Column="0" Cursor="IBeam"/>
+        <TextBox FontSize="15"  Grid.Row="2" Grid.Column="1" Style="{StaticResource MyWaterMarkStyle}" Tag= "Year" Margin="10,5,29,6" x:Name="Year" RenderTransformOrigin="0.32,0.513" Background="#FFEDE9E9" Cursor="IBeam"/>
+        <TextBox FontSize="15" Grid.Row="2" Style="{StaticResource MyWaterMarkStyle}" Tag="Month" Margin="1,5,88,8" x:Name="Month" RenderTransformOrigin="0.32,0.513" Background="#FFEDE9E9" Grid.Column="2" Cursor="IBeam"/>
+        <Button x:Name="Pay_Butt" Grid.Row="5" Content="Pay" Grid.ColumnSpan="2" Margin="11,30,138,130" FontFamily="Arial Rounded MT Bold" Grid.Column="1" Foreground="White" Background="#FF40B475" Cursor="Hand" Click="Pay_Butt_Click"/>
+        <Button Content="Cancel" FontFamily="Arial Rounded MT Bold" Foreground="White" Background="Red" Margin="138,30,17,130" Grid.Row="5" Click="Cancel" Cursor="Hand"/>
         <TextBlock x:Name="No_error" Visibility="Collapsed" Grid.Row="4" Text="Invalid Card number" FontSize="20" FontFamily="Elephant" Margin="76,5,94,25" OpacityMask="#FF291E1E" Grid.ColumnSpan="3">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -101,7 +101,7 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
-        <TextBox FontSize="15" Grid.Row="3" Margin="76,10,88,49" Style="{StaticResource MyWaterMarkStyle}" Tag="Password" x:Name="password" RenderTransformOrigin="0.32,0.513" Background="Transparent" Grid.ColumnSpan="3" TextAlignment="Left"/>
+        <TextBox FontSize="15" Grid.Row="3" Margin="76,10,88,49" Style="{StaticResource MyWaterMarkStyle}" Tag="Password" x:Name="password" RenderTransformOrigin="0.32,0.513" Background="Transparent" Grid.ColumnSpan="3" TextAlignment="Left" Cursor="IBeam"/>
 
     </Grid>
 </Window>
