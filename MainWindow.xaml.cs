@@ -50,9 +50,9 @@ namespace project
             this.Close();
         }
     }
-    public  class Books:IEnumerable
+    public  class Book:IEnumerable
     {
-        public static List<Books> allbooks = new List<Books>();
+        public static List<Book> books = new List<Book>();
         public static List<string> allbooksname = new List<string>();
         public string Name { get; set; }
         public string Author { get; set; }
@@ -71,7 +71,7 @@ namespace project
         public int Total_Sale { get; }
 
 
-        public Books(string Name, string Author, float Price, int PublishedYear, string Summary,string Cover_Path,string Pdf_Path, int Offtime, float Discount_Value)
+        public Book(string Name, string Author, float Price, int PublishedYear, string Summary,string Cover_Path,string Pdf_Path, int Offtime, float Discount_Value)
         {
             this.Name = Name;
             this.Author = Author;
@@ -83,6 +83,7 @@ namespace project
             this.Offtime = Offtime;
             this.Discount_Value = Discount_Value;
             type = Type.normal;
+           // id = books[books.Count - 1].id + 1;
             if (Rating != null)
             {
                 Rate = Rating.Sum(x => x / Rating.Count);
@@ -104,11 +105,11 @@ namespace project
 
     static class ExtentionMetodes
     {
-        public static void AddTotable(this Books book)
+        public static void AddTotable(this Book book)
         {
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
+            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
             connection.Open();
-            string Command = "insert into Users(Name,Author,Published Year,Price,Summary,Cover,Pdf Path,Type,vipfee) values('" + book.Name.Trim() + "','" + book.Author.Trim() + "','" + book.PublishedYear + "','" + book.Price + " ','"+book.Summary.Trim()+ "','" + book.Cover_Path.Trim() + "','" + book.Pdf_Path.Trim() + "','"+"normal"+"','"+0+"'";
+            string Command = "insert into Books(Name,Author,Published Year,Price,Summary,Cover Path,Pdf Path,Type) values('" + book.Name.Trim() + "','" + book.Author.Trim() + "','" + book.PublishedYear + "','" + book.Price + " ','"+book.Summary.Trim()+ "','" + book.Cover_Path.Trim() + "','" + book.Pdf_Path.Trim() + "','"+"normal"+"'";
             SqlCommand cmd = new SqlCommand(Command, connection);
             cmd.BeginExecuteNonQuery();
             connection.Close();

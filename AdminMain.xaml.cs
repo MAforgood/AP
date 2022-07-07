@@ -33,17 +33,17 @@ namespace project
         {
 
             InitializeComponent();
-            SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+            SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
             _connection.Open();
             string command = "select * from Books ";
             SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
             DataTable table = new DataTable();
             adapter.Fill(table);
-           // for(int i=0;i<table.Rows.Count; i++)
-           // {
-            //    Books book = new Books(table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), float.Parse(table.Rows[i][3].ToString()),int.Parse(table.Rows[i][4].ToString()), table.Rows[i][5].ToString(), table.Rows[i][6].ToString(), table.Rows[i][7].ToString(), int.Parse(table.Rows[i][8].ToString()),float.Parse(table.Rows[i][9].ToString()));
-             //   Books.allbooks.Add(book);
-           // }
+           for(int i=0;i<table.Rows.Count; i++)
+            {
+                Book book = new Book(table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), float.Parse(table.Rows[i][3].ToString()),int.Parse(table.Rows[i][4].ToString()), table.Rows[i][5].ToString(), table.Rows[i][6].ToString(), table.Rows[i][7].ToString(), int.Parse(table.Rows[i][8].ToString()),float.Parse(table.Rows[i][9].ToString()));
+                Book.books.Add(book);
+            }
         }
 
 
@@ -126,7 +126,7 @@ namespace project
         {
             if (editnamebox.Text.Length>0&&editnamebox.Text.Length<50)
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
                 string command = "select * from Books where Name ='" + editnamebox.Text.Trim() + "' ";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
@@ -157,9 +157,9 @@ namespace project
             }
             else
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
-                string command2 = "Update Books SET vipfee='" +float.Parse(vipprice.Text) + "'where Name='"+vipprice.Text+"'";
+                string command2 = "Update Books SET vipfee='"+float.Parse(vipprice.Text)+"'where Name='"+vipbooksbox.Text+"'";
                 SqlCommand cmd2 = new SqlCommand(command2, _connection);
                 try
                 {
@@ -177,7 +177,7 @@ namespace project
         {
             if (vipbooksbox.Text.Length>0&& vipbooksbox.Text.Length<50)
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
                 string command = "select * from Books where Name ='" + vipbooksbox.Text.Trim() + "'";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
@@ -190,7 +190,7 @@ namespace project
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
                 _connection.Close();
-                SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection2.Open();
                 //SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\DataSql\data.mdf;Integrated Security=True;Connect Timeout=30");
                 // _connection.Open();
@@ -213,7 +213,7 @@ namespace project
         {
             if (offnamebookbox.Text.Length > 0 && offnamebookbox.Text.Length < 50)
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
                 string command = "select * from Books where Name ='" + offnamebookbox.Text.Trim() + "'";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
@@ -226,27 +226,50 @@ namespace project
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
                 _connection.Close();
-                /*
-                if (float.Parse(offbookpercentagebox.Text)<100&& float.Parse(offbookpercentagebox.Text)>0)
+
+                if (float.Parse(offbookpercentagebox.Text) < 100 && float.Parse(offbookpercentagebox.Text) > 0)
                 {
-                    SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
-                    int hlp = int.Parse(offbooktimebox.Text);
-                    TimeOnly time = new TimeOnly();
-                    time.AddHours(hlp);
-                    _connection.Open();
-                    string command2 = "Update Books SET Discount Time='" + time + "',Discount Value='" + float.Parse(offbookpercentagebox.Text) + "'";
-                    SqlCommand cmd2 = new SqlCommand(command2, _connection);
+                    SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+                    _connection2.Open();
+                    string command2 = "Update Books SET [Discount Time]='" + int.Parse(offbooktimebox.Text) + "',[Discount Value]='"+float.Parse(offbookpercentagebox.Text)+"' WHERE Name='"+offnamebookbox.Text+"'";
+
+                    SqlCommand cmd2 = new SqlCommand(command2, _connection2);
                     try
                     {
-                        cmd2.ExecuteNonQuery();
-                        MessageBox.Show("Set Successfully");
+                        cmd2.BeginExecuteNonQuery();
+                         MessageBox.Show("Set Successfully");
+                        offnamebookbox.Text = "";
+                        offbooktimebox.Text = "";
+                        offbookpercentagebox.Text = "";
+                           
+                        _connection2.Close();
                     }
                     catch (SqlException ex)
                     {
                         MessageBox.Show(ex.Message);
                     }
+                    /*
+                    SqlConnection _connection4 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+                    _connection4.Open();
+                    string command4 = "Update Books SET Discount Value='" + float.Parse(offbookpercentagebox.Text) + "'";
+                    SqlCommand cmd4 = new SqlCommand(command4, _connection4);
+                    try
+                    {
+                        cmd4.BeginExecuteNonQuery();
+                        MessageBox.Show("Set Successfully");
+                        _connection2.Close();
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    */
                 }
-                */
+
+            }
+            else
+            {
+                MessageBox.Show("Wrong Format!");
             }
         }
         private void Walletincomebut_Click(object sender, RoutedEventArgs e)
@@ -312,7 +335,7 @@ namespace project
             }
            // if (editnamebox.Text.ToString().Length>0&& editnamebox.Text.ToString().Length<50)
            // {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
                 string command = "select * from Books where Name ='" + addbooknamebox.Text.ToString().Trim() + "'";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
@@ -330,17 +353,17 @@ namespace project
                 {
                     if (int.Parse(addbookyearbox.Text) > 0 && int.Parse(addbookyearbox.Text) < 2022)
                     {
-                        if (int.Parse(addbookpricebox.Text) > 0 && int.Parse(addbookpricebox.Text) < 10000000)
+                        if (int.Parse(addbookpricebox.Text) > 0 && int.Parse(addbookpricebox.Text) < 10000000) 
                         {
                             if (addbooksummarybox.Text.Length > 0 && addbooksummarybox.Text.Length < 300)
                             {
-                                Books book = new Books(addbooknamebox.Text, addbookauthorbox.Text, int.Parse(addbookyearbox.Text), int.Parse(addbookpricebox.Text), addbooksummarybox.Text,addbookimagepathbox.Text,addbookpdfpathbox.Text,0,0);
+                                Book book = new Book(addbooknamebox.Text, addbookauthorbox.Text, int.Parse(addbookyearbox.Text), int.Parse(addbookpricebox.Text), addbooksummarybox.Text,addbookimagepathbox.Text,addbookpdfpathbox.Text,0,0);
 
-                            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                             connection.Open();
-                            string Command2 = "insert into Books(Id,Name,Author,Published Year,Price,Summary,Cover Path,Pdf Path,Type) values('"+book.id+"','" + book.Name.ToString().Trim() + "','" + book.Author.ToString().Trim() + "','" + book.PublishedYear + "','" + book.Price + " ','" + book.Summary.ToString().Trim() + "','" + book.Cover_Path.ToString().Trim() + "','" + book.Pdf_Path.ToString().Trim() + "','"+book.Offtime+ "','" + book.Discount_Value + "','" + book.Rating + "','" + book.Total_Sale + "','" + book.Total_Income + "','" + "0" + "')";
+                            string Command2 = "insert into [Books] values('"+book.id+"','" + book.Name.ToString().Trim() + "','" + book.Author.ToString().Trim() + "','" + book.Price + "','" + book.PublishedYear + " ','" + book.Summary.ToString().Trim() + "','" + book.Cover_Path.ToString().Trim() + "','" + book.Pdf_Path.ToString().Trim() + "','"+book.Offtime+ "','" + book.Discount_Value + "','" + book.Rating + "','" + book.Total_Sale + "','" + book.Total_Income + "','" + 0 + "','"+0+"')";
                             SqlCommand cmd2 = new SqlCommand(Command2, connection);
-                            cmd2.BeginExecuteNonQuery();
+                            cmd2.ExecuteNonQuery();
                             connection.Close();
                             MessageBox.Show("The Book Was Added!","Successful Attempt");
                             addbooknamebox.Text = "";
@@ -370,7 +393,7 @@ namespace project
             if (usersearchbox.Text == "") { MessageBox.Show("Cnat Be Empty"); }
             else
             {
-                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 try
                 {
                     connection.Open();
@@ -396,7 +419,7 @@ namespace project
             if (booksearchbox.Text == "") { MessageBox.Show("Cant Be Empty"); }
             else
             {
-                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 try
                 {
                     connection.Open();
@@ -421,7 +444,7 @@ namespace project
         {
             if (delnamebox.Text.Length>0&& delnamebox.Text.Length<50)
             {
-                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 _connection.Open();
                 string command = "select * from Books where Name ='" + delnamebox.Text.Trim() + "'";
                 SqlDataAdapter adapter = new SqlDataAdapter(command, _connection);
@@ -434,7 +457,7 @@ namespace project
                     MessageBox.Show("This Book Doesnt Exists!", "Not Found"); ; return;
                 }
                 _connection.Close();
-                SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 string command2= "DELETE FROM Books WHERE Name ='"+ delnamebox.Text.Trim() + "'";
                 _connection2.Open();
                 SqlCommand cmd2 = new SqlCommand(command2,_connection2);
@@ -442,6 +465,7 @@ namespace project
                 {
                     cmd2.ExecuteNonQuery();
                     MessageBox.Show("Delete successful");
+                    delnamebox.Text = "";
                 }
                 catch (SqlException ex)
                 {
@@ -459,7 +483,7 @@ namespace project
             if (vipuserssearchbox.Text == "") { MessageBox.Show("Cant Be Empty"); }
             else
             {
-                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
+                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                 try
                 {
                     connection.Open();
@@ -489,6 +513,50 @@ namespace project
             addbooksummarybox.Text = "";
             addbookpdfpathbox.Text = "";
             addbookimagepathbox.Text = "";
+        }
+
+        private void Showallbooksbut_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+            try
+            {
+                connection.Open();
+                string command = "select * from Books";
+                SqlCommand cmd = new SqlCommand(command, connection);
+                cmd.ExecuteNonQuery();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable data = new DataTable("Books");
+                adapter.Fill(data);
+                booklisstdatagrid.ItemsSource = data.DefaultView;
+                adapter.Update(data);
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "exception");
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+            try
+            {
+                connection.Open();
+                string command = "select * from Users ";
+                SqlCommand cmd = new SqlCommand(command, connection);
+                cmd.ExecuteNonQuery();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable data = new DataTable("Users");
+                adapter.Fill(data);
+                userlistdatagrid.ItemsSource = data.DefaultView;
+                adapter.Update(data);
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "exception");
+            }
         }
     }
 }

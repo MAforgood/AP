@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -40,20 +41,98 @@ namespace project
                         {
                             if (neweditsummary.Text.Length > 0 && neweditsummary.Text.Length < 300)
                             {
-                                SqlConnection _connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
-                                _connection.Open();
-                                string command2 = "Update Books SET Name='" + neweditname.Text.Trim() + "',Author='" + neweditauthor.Text.Trim() + "',Published Year='" + int.Parse(newedityear.Text) + "',Price='" + float.Parse(neweditprice.Text)+ "',Summary='" + neweditsummary.Text.Trim() + "',Cover_Path='" + neweditcoverpathbox.Text.Trim() + "',Pdf_Path='" + neweditpdfpathbox.Text.Trim() + "'where Name='"+currentnamebox.Text+"' ";
-                                SqlCommand cmd2 = new SqlCommand(command2, _connection);
+                                SqlConnection _connection3 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+                                _connection3.Open();
+                                string command3 = "select id from Books where Name ='" + currentnamebox.Text.Trim() + "'";
+                                SqlDataAdapter adapter3 = new SqlDataAdapter(command3, _connection3);
+                                DataTable table3 = new DataTable();
+                                adapter3.Fill(table3);
+                                int hlp = int.Parse(table3.Rows[0].ToString());
+
+                                SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+                                string command2 = "DELETE FROM Books WHERE Name ='" + currentnamebox.Text.Trim() + "'";
+                                _connection2.Open();
+                                SqlCommand cmd2 = new SqlCommand(command2, _connection2);
+
                                 try
                                 {
-                                    cmd2.BeginExecuteNonQuery();
-                                    MessageBox.Show("Edited Successfully");
-                               }
+                                    cmd2.ExecuteNonQuery();
+                                    _connection2.Close();
+                                   
+                                }
                                 catch (SqlException ex)
                                 {
                                     MessageBox.Show(ex.Message);
-                               }
+                                }
+
+                                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+                                connection.Open();
+                                string Command3 = "insert into [Books] values('" + hlp + "','" + neweditname.Text.Trim() + "','" + neweditauthor.Text.Trim() + "','" + float.Parse(neweditprice.Text) + "','" + int.Parse(newedityear.Text) + " ','" + neweditsummary.Text.Trim() + "','" + neweditcoverpathbox.Text.Trim() + "','" + neweditpdfpathbox.Text.Trim() + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "')";
+                                SqlCommand cmd3 = new SqlCommand(Command3, connection);
+                                cmd3.ExecuteNonQuery();
+                                connection.Close();
+                                MessageBox.Show("Edited Successfully!","Done");
+                                this.Close();
+                                /*
+                                using (SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\Project.mdf;Integrated Security=True;Connect Timeout=30"))
+                                {
+                                    conn.Open();
+                                    using (SqlCommand cmd2 = new SqlCommand("UPDATE Books SET Name=@Name,Author=@Author,Published Year=@Published Year,Price=@Price,Summary=@Summary,Cover_Path=@Cover_Path,Pdf_Path=@Pdf_Path" + "WHERE Name=@Name", conn))
+                                    {
+                                        try
+                                        {
+                                            cmd2.Parameters.AddWithValue("@Name", neweditname.Text.Trim());
+                                            cmd2.Parameters.AddWithValue("@Author", neweditauthor.Text.Trim());
+                                            cmd2.Parameters.AddWithValue("@Published Year", int.Parse(newedityear.Text));
+                                            cmd2.Parameters.AddWithValue("@Price", float.Parse(neweditprice.Text));
+                                            cmd2.Parameters.AddWithValue("@Summary", neweditsummary.Text.Trim());
+                                            cmd2.Parameters.AddWithValue("@Cover_Path", neweditcoverpathbox.Text.Trim());
+                                            cmd2.Parameters.AddWithValue("@Pdf_Path", neweditpdfpathbox.Text.Trim());
+                                            int rows = cmd2.ExecuteNonQuery();
+                                            conn.Close();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show(ex.Message);
+                                        }
+                                    }
+                                }
+                               
+                                SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+                                SqlDataAdapter adapter = new SqlDataAdapter();
+                                SqlCommand cmd2 = new SqlCommand();
+                                cmd2.CommandText = "UPDATE Books SET Name=@Name,Author=@Author,Price=@Price,Summary=@Summary,Cover_Path=@Cover_Path,Pdf_Path=@Pdf_Path" + "WHERE Name=@currentnamebox.Text";
+                                adapter.UpdateCommand = cmd2;
+                                adapter.UpdateCommand.Parameters.Add("@Name", SqlDbType.NVarChar).Value = neweditname.Text;
+                                adapter.UpdateCommand.Parameters.Add("@Author", SqlDbType.NVarChar).Value = neweditauthor.Text;
+                                //adapter.UpdateCommand.Parameters.Add("@Published Year", SqlDbType.Int).Value = int.Parse(newedityear.Text);
+                                adapter.UpdateCommand.Parameters.Add("@Price", SqlDbType.Float).Value = float.Parse(neweditprice.Text);
+                                adapter.UpdateCommand.Parameters.Add("@Summary", SqlDbType.NVarChar).Value = neweditsummary.Text;
+                                adapter.UpdateCommand.Parameters.Add("@Cover_Path", SqlDbType.NVarChar).Value = neweditcoverpathbox.Text;
+                                adapter.UpdateCommand.Parameters.Add("@Pdf_Path", SqlDbType.NVarChar).Value = neweditpdfpathbox.Text;
+                                adapter.UpdateCommand.Connection = conn;
+                                conn.Open();
+                                adapter.UpdateCommand.ExecuteNonQuery();
+                                conn.Dispose();
+                                conn.Close();
+                               /*
+                                conn.Open();
+
+                                string command2 = "Update Books SET Name='" + neweditname.Text.Trim() + "',Author='" + neweditauthor.Text.Trim() + "',Published Year='" + int.Parse(newedityear.Text) + "',Price='" + float.Parse(neweditprice.Text)+ "',Summary='" + neweditsummary.Text.Trim() + "',Cover_Path='" + neweditcoverpathbox.Text.Trim() + "',Pdf_Path='" + neweditpdfpathbox.Text.Trim() + "'where Name='"+currentnamebox.Text+"' ";
+                                
+                                try
+                            {
+                                cmd2.BeginExecuteNonQuery();
+                                MessageBox.Show("Edited Successfully");
+                           }
+                            catch (SqlException ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                           }
+                           */
                             }
+                        
+                            
                             else
                             {
                                 MessageBox.Show("Wrong Format!", "Summary Format!");
