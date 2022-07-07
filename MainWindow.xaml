@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:project"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="Gold" WindowStartupLocation="CenterScreen">
+
     <Grid>
+        <Button Content="Normal User" HorizontalAlignment="Left" Margin="285,159,0,0" VerticalAlignment="Top" Width="229" Height="49" RenderTransformOrigin="0.223,0.592" Click="Button_Click"/>
+        <Button Content="Admin" HorizontalAlignment="Left" Margin="285,213,0,0" VerticalAlignment="Top" Width="229" Height="50" Click="Button_Click_1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="328,10,0,0" TextWrapping="Wrap" Text="Welcome" FontSize="35" FontFamily="impact" VerticalAlignment="Top" Width="146" Height="51" RenderTransformOrigin="0.911,0.529"/>
+        <Label Height="25" Margin="285,268,318,0" Name="label1" VerticalAlignment="Top">
+            <Hyperlink Click="Hyperlink_Click">Already Have An Account?</Hyperlink>
+        </Label>
+
 
     </Grid>
 </Window>
