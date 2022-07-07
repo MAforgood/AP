@@ -83,7 +83,15 @@ namespace project
             this.Offtime = Offtime;
             this.Discount_Value = Discount_Value;
             type = Type.normal;
-           // id = books[books.Count - 1].id + 1;
+            if (books.Count == 0)
+            {
+                id = 0;
+            }
+            else
+            {
+                id = books[books.Count - 1].id + 1;
+            }
+            
             if (Rating != null)
             {
                 Rate = Rating.Sum(x => x / Rating.Count);

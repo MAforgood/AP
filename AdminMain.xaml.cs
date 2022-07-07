@@ -274,12 +274,20 @@ namespace project
         }
         private void Walletincomebut_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Total Income : ", "Income");
+            SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+            _connection2.Open();
+            string command2 = "select SUM([Total Sale]) FROM Books";
+            
+            SqlCommand cmd2 = new SqlCommand(command2, _connection2);
+            double sum = Convert.ToInt32(cmd2.ExecuteScalar());
+
+            MessageBox.Show("Total Income : "+sum, "Income");
         }
 
         private void Walletdepositbut_Click(object sender, RoutedEventArgs e)
         {
-
+            Walletadminpasscheck wallet = new Walletadminpasscheck();
+            wallet.Show();
         }
         /*
         private void Statsbooknamebut_Click(object sender, RoutedEventArgs e)
@@ -397,7 +405,7 @@ namespace project
                 try
                 {
                     connection.Open();
-                    string command = "select * from Users where (Lastname = '" + usersearchbox.Text + "' or Email = '" + usersearchbox.Text + "') And Type='" + "normal" + "'";
+                    string command = "select * from Users where (Lastname = '" + usersearchbox.Text + "' or Email = '" + usersearchbox.Text + "') And Type='" +0+ "'";
                     SqlCommand cmd = new SqlCommand(command, connection);
                     cmd.ExecuteNonQuery();
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -487,7 +495,7 @@ namespace project
                 try
                 {
                     connection.Open();
-                    string command = "select * from Users where (Lastname = '" + vipuserssearchbox.Text + "' or Email = '" + vipuserssearchbox.Text + " ') And Type='"+"VIP"+"'";
+                    string command = "select * from Users where (Lastname = '" + vipuserssearchbox.Text + "' or Email = '" + vipuserssearchbox.Text + " ') And Type='"+"1"+"'";
                     SqlCommand cmd = new SqlCommand(command, connection);
                     cmd.ExecuteNonQuery();
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);

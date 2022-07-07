@@ -26,7 +26,14 @@ namespace project
 
         private void Walletadminpassbut_Click(object sender, RoutedEventArgs e)
         {
+            if (walletadminpassbox.Password == "12345")
+            {
 
+            }
+            else
+            {
+                MessageBox.Show("Access Denied!","Error");
+            }
         }
     }
 }

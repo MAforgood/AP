@@ -47,7 +47,7 @@ namespace project
                                 SqlDataAdapter adapter3 = new SqlDataAdapter(command3, _connection3);
                                 DataTable table3 = new DataTable();
                                 adapter3.Fill(table3);
-                                int hlp = int.Parse(table3.Rows[0].ToString());
+                                int hlp = int.Parse(table3.Rows[0][0].ToString());
 
                                 SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
                                 string command2 = "DELETE FROM Books WHERE Name ='" + currentnamebox.Text.Trim() + "'";
