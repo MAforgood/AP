@@ -28,7 +28,8 @@ namespace project
         {
             if (walletadminpassbox.Password == "12345")
             {
-
+                Payment Pay = new Payment();
+                Pay.Show();
             }
             else
             {

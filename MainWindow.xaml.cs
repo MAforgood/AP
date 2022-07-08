@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Collections;
 using System.Data.SqlClient;
+using System.Collections.ObjectModel;
 
 namespace project
 {
@@ -56,46 +57,36 @@ namespace project
         public static List<string> allbooksname = new List<string>();
         public string Name { get; set; }
         public string Author { get; set; }
-        public int PublishedYear { get; set; }
+        public int Published_Year { get; set; }
         public float Price { get; set; }
         public string Summary { get; set; }
         public string Cover_Path { get; set; }
         public string Pdf_Path { get; set; }
-        public int Offtime { get; set; }
+        public int Discount_Time { get; set; }
         public float Discount_Value { get; set; }
-       public Type type { get; set; }
+        public string audio_Path { get; set; }
+        public Type type { get; set; }
         public int id { get; set; }
-        public List<int> Rating { get; set; }
+        public ObservableCollection<int> Rating = new ObservableCollection<int>();
+
         public float Rate { get;  }
         public float Total_Income { get; }
         public int Total_Sale { get; }
 
 
-        public Book(string Name, string Author, float Price, int PublishedYear, string Summary,string Cover_Path,string Pdf_Path, int Offtime, float Discount_Value)
+        public Book(string Name, string Author, float Price, int PublishedYear, string Summary,string Cover_Path,string Pdf_Path, string audio_Path)
         {
             this.Name = Name;
             this.Author = Author;
-            this.PublishedYear = PublishedYear;
+            this.Published_Year = PublishedYear;
             this.Price = Price;
             this.Summary = Summary;
             this.Cover_Path = Cover_Path;
             this.Pdf_Path = Pdf_Path;
-            this.Offtime = Offtime;
+            this.audio_Path = audio_Path;
             this.Discount_Value = Discount_Value;
             type = Type.normal;
-            if (books.Count == 0)
-            {
-                id = 0;
-            }
-            else
-            {
-                id = books[books.Count - 1].id + 1;
-            }
             
-            if (Rating != null)
-            {
-                Rate = Rating.Sum(x => x / Rating.Count);
-            }
         }
         public IEnumerator GetEnumerator()
         {
@@ -117,7 +108,7 @@ namespace project
         {
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\data.mdf;Integrated Security=True;Connect Timeout=30");
             connection.Open();
-            string Command = "insert into Books(Name,Author,Published Year,Price,Summary,Cover Path,Pdf Path,Type) values('" + book.Name.Trim() + "','" + book.Author.Trim() + "','" + book.PublishedYear + "','" + book.Price + " ','"+book.Summary.Trim()+ "','" + book.Cover_Path.Trim() + "','" + book.Pdf_Path.Trim() + "','"+"normal"+"'";
+            string Command = "insert into Books(Name,Author,Published Year,Price,Summary,Cover Path,Pdf Path,Type) values('" + book.Name.Trim() + "','" + book.Author.Trim() + "','" + book.Published_Year + "','" + book.Price + " ','"+book.Summary.Trim()+ "','" + book.Cover_Path.Trim() + "','" + book.Pdf_Path.Trim() + "','"+"normal"+"'";
             SqlCommand cmd = new SqlCommand(Command, connection);
             cmd.BeginExecuteNonQuery();
             connection.Close();

@@ -41,7 +41,7 @@ namespace project
             adapter.Fill(table);
            for(int i=0;i<table.Rows.Count; i++)
             {
-                Book book = new Book(table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), float.Parse(table.Rows[i][3].ToString()),int.Parse(table.Rows[i][4].ToString()), table.Rows[i][5].ToString(), table.Rows[i][6].ToString(), table.Rows[i][7].ToString(), int.Parse(table.Rows[i][8].ToString()),float.Parse(table.Rows[i][9].ToString()));
+                Book book = new Book(table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), float.Parse(table.Rows[i][4].ToString()),int.Parse(table.Rows[i][3].ToString()), table.Rows[i][6].ToString(), table.Rows[i][9].ToString(), table.Rows[i][10].ToString(), table.Rows[i][5].ToString());
                 Book.books.Add(book);
             }
         }
@@ -276,7 +276,7 @@ namespace project
         {
             SqlConnection _connection2 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
             _connection2.Open();
-            string command2 = "select SUM([Total Sale]) FROM Books";
+            string command2 = "select SUM([Totalincome]) FROM Books";
             
             SqlCommand cmd2 = new SqlCommand(command2, _connection2);
             double sum = Convert.ToInt32(cmd2.ExecuteScalar());
@@ -337,7 +337,7 @@ namespace project
         */
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            if (addbooknamebox.Text == "" || addbookauthorbox.Text == "" || addbookyearbox.Text == "" || addbookpricebox.Text == "" || addbooksummarybox.Text == ""||addbookimagepathbox.Text==""||addbookpdfpathbox.Text=="")
+            if (addbooknamebox.Text == "" || addbookauthorbox.Text == "" || addbookyearbox.Text == "" || addbookpricebox.Text == "" || addbooksummarybox.Text == ""||addbookimagepathbox.Text==""||addbookpdfpathbox.Text==""||addbookidbox.Text==""||addbookaudiopathbox.Text=="")
             {
                 MessageBox.Show("None Of Fields Can Be Empty!", "Empty Input");
             }
@@ -356,39 +356,57 @@ namespace project
                     MessageBox.Show("This Book Already Existed", "Repetition"); ; return;
                 }
             _connection.Close();
-
-                if (Regex.IsMatch(addbookauthorbox.Text, @"^[a-zA-Z/ ]{3,32}$"))
+            SqlConnection _connection9 = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+            _connection9.Open();
+            string command9 = "select * from Books where Id ='" + int.Parse(addbookidbox.Text)+ "'";
+            SqlDataAdapter adapter9 = new SqlDataAdapter(command9, _connection9);
+            DataTable table9 = new DataTable();
+            adapter9.Fill(table9);
+            SqlCommand cmd9 = new SqlCommand(command9, _connection9);
+            cmd9.BeginExecuteNonQuery();
+            if (table9.Rows.Count > 0)
+            {
+                MessageBox.Show("This Id Already Existed", "Repetition"); ; return;
+            }
+            _connection.Close();
+            if (Regex.IsMatch(addbookauthorbox.Text, @"^[a-zA-Z/ ]{3,32}$"))
+                {
+                if (int.Parse(addbookidbox.Text) > 0 && int.Parse(addbookidbox.Text) < 10000)
                 {
                     if (int.Parse(addbookyearbox.Text) > 0 && int.Parse(addbookyearbox.Text) < 2022)
                     {
-                        if (int.Parse(addbookpricebox.Text) > 0 && int.Parse(addbookpricebox.Text) < 10000000) 
+                        if (int.Parse(addbookpricebox.Text) > 0 && int.Parse(addbookpricebox.Text) < 10000000)
                         {
                             if (addbooksummarybox.Text.Length > 0 && addbooksummarybox.Text.Length < 300)
                             {
-                                Book book = new Book(addbooknamebox.Text, addbookauthorbox.Text, int.Parse(addbookyearbox.Text), int.Parse(addbookpricebox.Text), addbooksummarybox.Text,addbookimagepathbox.Text,addbookpdfpathbox.Text,0,0);
+                                Book book = new Book(addbooknamebox.Text, addbookauthorbox.Text, float.Parse(addbookpricebox.Text), int.Parse(addbookyearbox.Text), addbooksummarybox.Text, addbookimagepathbox.Text, addbookpdfpathbox.Text, addbookaudiopathbox.Text);
 
-                            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
-                            connection.Open();
-                            string Command2 = "insert into [Books] values('"+book.id+"','" + book.Name.ToString().Trim() + "','" + book.Author.ToString().Trim() + "','" + book.Price + "','" + book.PublishedYear + " ','" + book.Summary.ToString().Trim() + "','" + book.Cover_Path.ToString().Trim() + "','" + book.Pdf_Path.ToString().Trim() + "','"+book.Offtime+ "','" + book.Discount_Value + "','" + book.Rating + "','" + book.Total_Sale + "','" + book.Total_Income + "','" + 0 + "','"+0+"')";
-                            SqlCommand cmd2 = new SqlCommand(Command2, connection);
-                            cmd2.ExecuteNonQuery();
-                            connection.Close();
-                            MessageBox.Show("The Book Was Added!","Successful Attempt");
-                            addbooknamebox.Text = "";
-                            addbookauthorbox.Text = "";
-                            addbookpricebox.Text = "";
-                            addbookyearbox.Text = "";
-                            addbooksummarybox.Text = "";
-                            addbookpdfpathbox.Text = "";
-                            addbookimagepathbox.Text = "";
-                            
+                                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30"); 
+                                connection.Open();
+                                string Command2 = "insert into [Books] values('" + int.Parse(addbookidbox.Text) + "','" + book.Name.ToString().Trim() + "','" + book.Author.ToString().Trim() + "','" + book.Published_Year + "','" + book.Price + " ','"+book.audio_Path+"','" + book.Summary.ToString().Trim() + "','"+0+ "','" + 0 + "','" + book.Pdf_Path.ToString().Trim() + "','" +0+ "','" + 0 + "','" + 0 + "','" + book.Cover_Path.ToString().Trim() + "','"+0+"')";
+                                SqlCommand cmd2 = new SqlCommand(Command2, connection);
+                                cmd2.ExecuteNonQuery();
+                                connection.Close();
+                                MessageBox.Show("The Book Was Added!", "Successful Attempt");
+                                addbooknamebox.Text = "";
+                                addbookauthorbox.Text = "";
+                                addbookpricebox.Text = "";
+                                addbookyearbox.Text = "";
+                                addbooksummarybox.Text = "";
+                                addbookpdfpathbox.Text = "";
+                                addbookimagepathbox.Text = "";
+                                addbookidbox.Text = "";
+                                addbookaudiopathbox.Text = "";
+
 
                             }
-                            else { MessageBox.Show("It Is Not In Correct Format","Summary Format!"); }
+                            else { MessageBox.Show("It Is Not In Correct Format", "Summary Format!"); }
                         }
                         else { MessageBox.Show("It Is Not In Correct Format", "Price Format!"); }
                     }
                     else { MessageBox.Show("It Is Not In Correct Format", "Year Format!"); }
+                }
+                else { MessageBox.Show("It Is Not In Correct Format", "Id Format!"); }
                 }
                 else { MessageBox.Show("It Is Not In Correct Format", "Author Format!"); }
            // }

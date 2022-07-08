@@ -65,9 +65,9 @@ namespace project
                                     MessageBox.Show(ex.Message);
                                 }
 
-                                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30");
+                                SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=I:\proj.mdf;Integrated Security=True;Connect Timeout=30"); 
                                 connection.Open();
-                                string Command3 = "insert into [Books] values('" + hlp + "','" + neweditname.Text.Trim() + "','" + neweditauthor.Text.Trim() + "','" + float.Parse(neweditprice.Text) + "','" + int.Parse(newedityear.Text) + " ','" + neweditsummary.Text.Trim() + "','" + neweditcoverpathbox.Text.Trim() + "','" + neweditpdfpathbox.Text.Trim() + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "','" + 0 + "')";
+                                string Command3 = "insert into [Books] values('" + hlp + "','" + neweditname.Text.Trim() + "','" + neweditauthor.Text.Trim() + "','" + int.Parse(newedityear.Text) + "','" + float.Parse(neweditprice.Text) + " ','"+neweditaudiobox.Text+"','" + neweditsummary.Text.Trim() + "','"+0+ "','" + 0 + "','" + neweditpdfpathbox.Text.Trim() + "','" + 0 + "','" + 0 + "','" + 0 + "',,'" + neweditcoverpathbox.Text.Trim() + "','"+0+"')";
                                 SqlCommand cmd3 = new SqlCommand(Command3, connection);
                                 cmd3.ExecuteNonQuery();
                                 connection.Close();

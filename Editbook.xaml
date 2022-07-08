@@ -16,7 +16,7 @@
         <TextBox x:Name="neweditauthor" HorizontalAlignment="Left" Height="22" Margin="137,86,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
         <TextBox x:Name="newedityear" HorizontalAlignment="Left" Height="22" Margin="137,123,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
         <TextBox x:Name="neweditprice" HorizontalAlignment="Left" Height="22" Margin="137,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
-        <Button x:Name="neweditbut" FontSize="16" Content="Edit" HorizontalAlignment="Left" Margin="185,334,0,0" VerticalAlignment="Top" Width="82" Height="25" Click="Button_Click"/>
+        <Button x:Name="neweditbut" FontSize="16" Content="Edit" HorizontalAlignment="Left" Margin="187,366,0,0" VerticalAlignment="Top" Width="82" Height="25" Click="Button_Click"/>
         <TextBox x:Name="neweditsummary" HorizontalAlignment="Left" Height="22" Margin="137,196,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
         <TextBlock HorizontalAlignment="Left" Margin="41,236,0,0" TextWrapping="Wrap" Text="New Image Path" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.464,1.754" Width="91"/>
         <TextBlock HorizontalAlignment="Left" Margin="41,275,0,0" TextWrapping="Wrap" Text="New Pdf Path" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.464,1.754" Width="91"/>
@@ -24,5 +24,7 @@
         <TextBox x:Name="neweditpdfpathbox" HorizontalAlignment="Left" Height="22" Margin="137,272,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
         <TextBlock HorizontalAlignment="Left" Margin="41,10,0,0" TextWrapping="Wrap" Text="Current Name" VerticalAlignment="Top" Height="19" Width="91"/>
         <TextBox x:Name="currentnamebox" HorizontalAlignment="Left" Height="22" Margin="137,7,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29"  />
+        <TextBlock HorizontalAlignment="Left" Margin="41,317,0,0" TextWrapping="Wrap" Text="New Pdf Path" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.464,1.754" Width="91"/>
+        <TextBox x:Name="neweditaudiobox" HorizontalAlignment="Left" Height="22" Margin="137,314,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
     </Grid>
 </Window>

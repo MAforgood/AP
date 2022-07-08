@@ -30,12 +30,16 @@
 
                     <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="63,442,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Grid.Column="2" Height="16"/>
                     <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="313,442,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171" Grid.Column="2" Height="16"/>
-                    <Button x:Name="addbookconfirmbut" Foreground="Green" Content="Confirm" Grid.Column="2" HorizontalAlignment="Left" Margin="179,229,0,0" VerticalAlignment="Top" Width="96" Click="Button_Click_3"/>
-                    <Button Content="Reset" Foreground="Red" Grid.Column="2" HorizontalAlignment="Left" Margin="179,304,0,0" VerticalAlignment="Top" Width="96" Click="Button_Click_4"/>
+                    <Button x:Name="addbookconfirmbut" Foreground="Green" Content="Confirm" Grid.Column="2" HorizontalAlignment="Left" Margin="455,230,0,0" VerticalAlignment="Top" Width="96" Click="Button_Click_3"/>
+                    <Button Content="Reset" Foreground="Red" Grid.Column="2" HorizontalAlignment="Left" Margin="455,297,0,0" VerticalAlignment="Top" Width="96" Click="Button_Click_4"/>
                     <TextBlock HorizontalAlignment="Left" Margin="59,415,0,0" TextWrapping="Wrap" Text="Pdf Path" VerticalAlignment="Top" Height="16" Width="55"/>
                     <TextBlock HorizontalAlignment="Left" Margin="59,472,0,0" TextWrapping="Wrap" Text="Image Path" VerticalAlignment="Top" Height="16" Width="67"/>
                     <TextBox x:Name="addbookpdfpathbox" HorizontalAlignment="Left" Height="23" Margin="59,435,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="865" Grid.ColumnSpan="3" />
                     <TextBox x:Name="addbookimagepathbox" HorizontalAlignment="Left" Height="23" Margin="59,493,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="865" Grid.ColumnSpan="3" />
+                    <TextBlock HorizontalAlignment="Left" Margin="21,71,0,0" TextWrapping="Wrap" Text="Id" VerticalAlignment="Top" Height="16" Width="55" Grid.Column="2"/>
+                    <TextBox x:Name="addbookidbox" HorizontalAlignment="Left" Height="22" Margin="21,0,0,407" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="293" Grid.Column="2" />
+                    <TextBlock HorizontalAlignment="Left" Margin="21,137,0,0" TextWrapping="Wrap" Text="Audio Path" VerticalAlignment="Top" Height="16" Width="68" Grid.Column="2"/>
+                    <TextBox x:Name="addbookaudiopathbox" HorizontalAlignment="Left" Height="22" Margin="21,0,0,343" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="293" Grid.Column="2" />
 
                 </Grid>
             </TabItem>
