@@ -1,0 +1,30 @@
+﻿<Window x:Class="project.Editbook"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:project"
+        mc:Ignorable="d"
+        Title="Editbook" Height="450" Width="450" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="41,57,0,0" TextWrapping="Wrap" Text="New Name" VerticalAlignment="Top" Width="91" RenderTransformOrigin="-0.805,2.026"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41,89,0,0" TextWrapping="Wrap" Text="New Author" VerticalAlignment="Top" Height="19" Width="91"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41,126,0,0" TextWrapping="Wrap" Text="Published Year" VerticalAlignment="Top" Height="19" Width="91"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41,163,0,0" TextWrapping="Wrap" Text="New Price" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.553,0" Width="91"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41,199,0,0" TextWrapping="Wrap" Text="New Summary" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.464,1.754" Width="91"/>
+        <TextBox x:Name="neweditname" HorizontalAlignment="Left" Height="22" Margin="137,51,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29"  />
+        <TextBox x:Name="neweditauthor" HorizontalAlignment="Left" Height="22" Margin="137,86,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
+        <TextBox x:Name="newedityear" HorizontalAlignment="Left" Height="22" Margin="137,123,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
+        <TextBox x:Name="neweditprice" HorizontalAlignment="Left" Height="22" Margin="137,160,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
+        <Button x:Name="neweditbut" FontSize="16" Content="Edit" HorizontalAlignment="Left" Margin="187,366,0,0" VerticalAlignment="Top" Width="82" Height="25" Click="Button_Click"/>
+        <TextBox x:Name="neweditsummary" HorizontalAlignment="Left" Height="22" Margin="137,196,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
+        <TextBlock HorizontalAlignment="Left" Margin="41,236,0,0" TextWrapping="Wrap" Text="New Image Path" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.464,1.754" Width="91"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41,275,0,0" TextWrapping="Wrap" Text="New Pdf Path" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.464,1.754" Width="91"/>
+        <TextBox x:Name="neweditcoverpathbox" HorizontalAlignment="Left" Height="22" Margin="137,233,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
+        <TextBox x:Name="neweditpdfpathbox" HorizontalAlignment="Left" Height="22" Margin="137,272,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
+        <TextBlock HorizontalAlignment="Left" Margin="41,10,0,0" TextWrapping="Wrap" Text="Current Name" VerticalAlignment="Top" Height="19" Width="91"/>
+        <TextBox x:Name="currentnamebox" HorizontalAlignment="Left" Height="22" Margin="137,7,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29"  />
+        <TextBlock HorizontalAlignment="Left" Margin="41,317,0,0" TextWrapping="Wrap" Text="New Pdf Path" VerticalAlignment="Top" Height="19" RenderTransformOrigin="0.464,1.754" Width="91"/>
+        <TextBox x:Name="neweditaudiobox" HorizontalAlignment="Left" Height="22" Margin="137,314,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.714,0.29" />
+    </Grid>
+</Window>

@@ -23,6 +23,7 @@ namespace project
         public float price { get; set; }
         public Payment(float _price)
         {
+            Boolean = true;
             price = _price;
             InitializeComponent();
         }

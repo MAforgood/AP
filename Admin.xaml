@@ -1,0 +1,20 @@
+﻿<Window x:Class="project.Admin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:project"
+        mc:Ignorable="d"
+        Title="Admin" Height="350" Width="300" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Left" Margin="20,78,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Height="16" Width="34"/>
+        <TextBlock HorizontalAlignment="Left" Margin="20,145,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Height="16" Width="50"/>
+        <TextBox x:Name="adminemail" HorizontalAlignment="Left" Height="23" Margin="20,107,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="227" RenderTransformOrigin="0.5,0.565"/>
+        <PasswordBox x:Name="adminpass" HorizontalAlignment="Left" Margin="20,177,0,0" VerticalAlignment="Top" Width="227" Height="24"/>
+        <Button x:Name="adminsigninbut" Content="Sign In" HorizontalAlignment="Left" Margin="129,255,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+    </Grid>
+</Window>

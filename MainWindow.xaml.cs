@@ -29,9 +29,7 @@ namespace project
     {
         public MainWindow()
         {
-            Payment payment = new Payment(20);
             InitializeComponent();
-            payment.Show();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -60,13 +58,14 @@ namespace project
     }
     public class User
     {
-        public static List<User> users = new List<User>(); 
+        public static List<User> users = new List<User>();
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public float Wallet { get; set; }
         public string Password { get; set; }
+        public DateTime Vip_Begining { get; set; }
         public Type type { get; set; }
         public ObservableCollection<Book> ShoppingCart = new ObservableCollection<Book>();
         public ObservableCollection<Book> BookMarks = new ObservableCollection<Book>();
@@ -139,7 +138,7 @@ namespace project
     public class Book
     {
         public static List<Book> books = new List<Book>();
-        public int id { get;}
+        public int id { get; }
         public string Name { get; set; }
         public string Author { get; set; }
         public float Price { get; set; }
@@ -147,6 +146,7 @@ namespace project
         public string Summary { get; set; }
         public string Cover_Path { get; set; }
         public string Pdf_Path { get; set; }
+        public string audio_Path { get; set; }
         public float discount_value { get; set; }
         public TimeOnly discount_Time { get; set; }
         public ObservableCollection<int> Ratings = new ObservableCollection<int>();
@@ -154,14 +154,14 @@ namespace project
         public int Total_Sale { get; set; }
         public float Total_Income { get; set; }
         public Type type { get; set; }
-        public Book(string _name,string _author,float _price,int _published,string _summary,string cover,string pdf)
+        public Book(string _name, string _author, float _price, int _published, string _summary, string cover, string pdf,string audio)
         {
             if (books.Count == 0)
             {
                 id = 0;
             }
             else
-            id = books[books.Count - 1].id + 1;
+                id = books[books.Count - 1].id + 1;
             Name = _name;
             Author = _author;
             Price = _price;
@@ -169,10 +169,11 @@ namespace project
             Summary = _summary;
             Cover_Path = cover;
             Pdf_Path = pdf;
+            audio_Path = audio;
             type = Type.normal;
             if (Ratings != null)
             {
-                Rate = Ratings.Sum(x => x/Ratings.Count);
+                Rate = Ratings.Sum(x => x / Ratings.Count);
             }
         }
     }
@@ -193,7 +194,7 @@ namespace project
             string Books = "";
             foreach (Book book in user.Books)
             {
-                Books += book.id.ToString()+",";
+                Books += book.id.ToString() + ",";
             }
             string BookMarks = "";
             foreach (Book book in user.BookMarks)
@@ -207,7 +208,7 @@ namespace project
             }
             SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\programms\c#\project\Database.mdf;Integrated Security=True;Connect Timeout=30");
             connection.Open();
-            string Command = "insert into Users values('" + user.Email.Trim() + "','" + user.First_Name.Trim() + "','" + user.Last_Name.Trim() + "','" + user.Phone.Trim() + "','" + user.Password.Trim() + "','" + user.Wallet + "','"+Books+ "','"+BookMarks+"','"+0+"','"+Cart+"')";
+            string Command = "insert into Users values('" + user.Email.Trim() + "','" + user.First_Name.Trim() + "','" + user.Last_Name.Trim() + "','" + user.Phone.Trim() + "','" + user.Password.Trim() + "','" + user.Wallet + "','" + Books + "','" + BookMarks + "','" + 0 + "','" + Cart + "')";
             SqlCommand cmd = new SqlCommand(Command, connection);
             cmd.ExecuteNonQueryAsync();
             connection.Close();

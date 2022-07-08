@@ -28,30 +28,52 @@
         <Button x:Name="Star_1" Background="Transparent" Grid.Row="2" Grid.Column="1" Margin="82,0,108,11" Cursor="Hand" BorderBrush="{x:Null}" Height="51" VerticalAlignment="Bottom" Click="Star_1_Click">
             <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
         </Button>
+        <Button x:Name="goldStar_1" Visibility="Collapsed" Background="Transparent" Grid.Row="2" Grid.Column="1" Margin="82,0,108,11" Cursor="Hand" BorderBrush="{x:Null}" Height="51" VerticalAlignment="Bottom" Click="goldStar_1_Click">
+            <Image Source="/star-png-icon-15.jpg" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
         <Button x:Name="Star_2" Grid.Row="2" Grid.Column="1" Margin="133,4,56,11" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" Click="Star_2_Click">
             <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
+        <Button x:Name="goldStar_2" Grid.Row="2" Visibility="Collapsed" Grid.Column="1" Margin="133,4,56,11" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" Click="goldStar_2_Click">
+            <Image Source="/star-png-icon-15.jpg" RenderTransformOrigin="0.5,0.5"  />
         </Button>
         <Button x:Name="Star_3" Grid.Row="2" Grid.Column="1" Margin="186,4,2,11" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" Click="Star_3_Click">
             <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
         </Button>
+        <Button x:Name="goldStar_3" Grid.Row="2" Visibility="Collapsed" Grid.Column="1" Margin="186,4,2,11" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" Click="goldStar_3_Click">
+            <Image Source="/star-png-icon-15.jpg" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
         <Button x:Name="Star_4" Grid.Row="2" Grid.Column="2" Margin="19,4,120,11" Cursor="Hand" BorderBrush="{x:Null}" Background="{x:Null}" Click="Star_4_Click">
             <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
+        <Button x:Name="goldStar_4" Grid.Row="2" Visibility="Collapsed" Grid.Column="2" Margin="19,4,120,11" Cursor="Hand" BorderBrush="{x:Null}" Background="{x:Null}" Click="Star_4_Click_1">
+            <Image Source="/star-png-icon-15.jpg" RenderTransformOrigin="0.5,0.5"  />
         </Button>
         <Button x:Name="Star_5" Grid.Row="2" Grid.Column="2" Margin="70,5,70,0" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" Height="51" VerticalAlignment="Top" Click="Star_5_Click">
             <Image Source="/star.png" RenderTransformOrigin="0.5,0.5"  />
         </Button>
+        <Button x:Name="goldStar_5" Grid.Row="2" Visibility="Collapsed" Grid.Column="2" Margin="70,5,70,0" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" Height="51" VerticalAlignment="Top" Click="goldStar_5_Click">
+            <Image Source="/star-png-icon-15.jpg" RenderTransformOrigin="0.5,0.5"  />
+        </Button>
         <TextBlock x:Name="Book_Name" Text="{Binding bookofpage.Name}" TextAlignment="Center" FontSize="15" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="82,10,54,9" FontFamily="Britannic Bold"/>
-        <TextBlock x:Name="Book_Rating" Text="{Binding Rating}" Grid.Row="2" Grid.Column="3" Margin="19,17,62,11" Cursor="Arrow"/>
+        <TextBlock x:Name="Book_Rating" Text="{Binding Rating , UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="3" Margin="19,17,62,11" Cursor="Arrow" Background="#FFE6E6E6"/>
         <Button x:Name="Book_Pdf" Background="Transparent"  Grid.Row="2" Margin="20,5,10,0" Click="Book_Pdf_Click" Cursor="Hand" BorderBrush="{x:Null}">
             <Image Source="/pdf-download-icon-png-22.jpg" Height="41"/>
         </Button>
-        <Button Grid.ColumnSpan="2" Margin="0,0,227,88" Background="{x:Null}" BorderBrush="{x:Null}" ClickMode="Press" Click="Button_Click">
+        <Button x:Name="Book_Voice" Background="Transparent"  Grid.Row="3" Margin="20,1,10,10" Click="Book_Voice_Click"  Cursor="Hand" BorderBrush="{x:Null}">
+            <Image Source="/2546422.png" Height="41"/>
+        </Button>
+        <Button x:Name="Add_Bookmark" Grid.ColumnSpan="2" Margin="0,0,227,88" Background="{x:Null}" BorderBrush="{x:Null}" ClickMode="Press" Click="Button_Click">
             <Image Source="/white-back-icon-3.jpg"/>
         </Button>
-        <Button x:Name="Add_Bookmark_Butt" Margin="22,10,44,56" Grid.Column="3" Grid.Row="3" Grid.RowSpan="2" Click="Add_Bookmark_Butt_Click" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand">
-            <Image Source="{Binding sourcee}"/>
+        <Button x:Name="Add_Bookmark_Butt" Visibility="Visible" Margin="10,10,56,56" Grid.Column="3" Grid.Row="3" Grid.RowSpan="2" Click="Add_Bookmark_Butt_Click" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand">
+            <Image Source="/add+bookmark-1319964827107158553.png"/>
         </Button>
-        <Button x:Name="Book_Buy" Content="{Binding bookofpage.Price}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="113,4,89,10" Cursor="Hand" Click="Book_Buy_Click" Background="#FF3BF66F"/>
+        <Button x:Name="Remove_Bookmark_Butt" Visibility="Collapsed" Margin="10,10,56,56" Grid.Column="3" Grid.Row="3" Grid.RowSpan="2" Click="Remove_Bookmark_Butt_Click"  Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand">
+            <Image Source="/1200px-OOjs_UI_icon_bookmark.svg.png"/>
+        </Button>
+        <Button x:Name="Book_Buy" Content="{Binding bookofpage.Price}" Grid.Row="4" Grid.Column="1" Margin="12,4,13,10" Cursor="Hand" Click="Book_Buy_Click" Background="#FF3BF66F"/>
+        <Button x:Name="Pay_Directly" Content="Pay directly" Margin="38,7,36,7" Grid.Column="2" Grid.Row="4" Background="#FFF64040" Foreground="White" Click="Pay_Directly_Click" />
         <TextBlock x:Name="Book_Summary" TextWrapping="WrapWithOverflow" Text="{Binding bookofpage.Summary}" Margin="26,28,28,28" Grid.Row="5" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="4">
             <TextBlock.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
